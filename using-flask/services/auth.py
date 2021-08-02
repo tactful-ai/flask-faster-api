@@ -2,9 +2,8 @@ from flask import request, abort
 from functools import wraps
 from jose import jwt
 import datetime
-from dummy import black_list_tokens
 
-
+black_list_tokens = []
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
@@ -37,7 +36,7 @@ def get_token_auth_header():
 
 
 
-def encode_auth_token(secret_key, user_id):
+def encode_auth_token(secret_key, username):
     """
     Generates the Auth Token
     :return: string
@@ -46,7 +45,7 @@ def encode_auth_token(secret_key, user_id):
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
             'iat': datetime.datetime.utcnow(),
-            'id': user_id
+            'username': username
         }
         return jwt.encode(
             payload,

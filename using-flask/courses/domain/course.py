@@ -1,4 +1,4 @@
-class Course():
+class Course:
     def __init__(self, id, name, price, duration, students_count = 0):
         self.id = id
         self.name = name
