@@ -1,2 +1,3 @@
 flask
 python-jose
+flask-restx

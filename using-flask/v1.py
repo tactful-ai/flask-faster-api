@@ -100,8 +100,8 @@ def delete_course(payload, course_id):
 @app.route("/courses/enroll", methods=["POST", "GET"])
 @requires_auth()
 def enroll_in_course(payload):
-    username = payload["username"]
     try:
+        username = payload["username"]
         course_id = request.form['id']
         coursesUC = CourseUseCases(Repo)
         result = coursesUC.enroll_course(username, course_id)
