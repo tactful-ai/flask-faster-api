@@ -1,2 +1,2 @@
-# flask-faster-api
-A Fast API style support for Flask. Gives you MyPy types with the flexibility of flask
+# courses-API
+This is courses api created with python, flask, and other flask extensions.
