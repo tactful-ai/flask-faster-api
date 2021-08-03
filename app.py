@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-
+from auth import auth
 app = Flask(__name__)
 
 courses = [
@@ -23,6 +23,7 @@ courses = [
 
 
 @app.route('/api/courses', methods=['GET'])
+@auth
 def listCourses():
     return jsonify({'courses': courses})
 
@@ -30,6 +31,7 @@ def listCourses():
 
 
 @app.route('/api/courses', methods=['POST'])
+@auth
 def addCourse():
     course = request.get_json()
     courses.append(course)
@@ -39,6 +41,7 @@ def addCourse():
 
 
 @app.route('/api/courses/<int:id>', methods=['GET'])
+@auth
 def getCourse(id):
     for course in courses:
         if course['id'] == id:
@@ -49,6 +52,7 @@ def getCourse(id):
 
 
 @app.route('/api/courses/<int:id>', methods=['PUT'])
+@auth
 def editCourse(id):
     for course in courses:
         if course['id'] == id:
@@ -62,7 +66,9 @@ def editCourse(id):
 
 # Delete Course
 
+
 @app.route('/api/courses/<int:id>', methods=['DELETE'])
+@auth
 def deleteCourse(id):
     index = 0
     for course in courses:
