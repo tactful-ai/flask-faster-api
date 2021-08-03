@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from auth import auth
+from auth import auth,encode_jwt
 app = Flask(__name__)
 
 courses = [
@@ -19,8 +19,16 @@ courses = [
     },
 ]
 
-# List Courses
+# Login
+@app.route('/api/login', methods=['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+    if username=="admin" and password=="admin":
+        return {'token':encode_jwt(username)}
+    return {'message':'Invalid username or password'}, 401
 
+# List Courses
 
 @app.route('/api/courses', methods=['GET'])
 @auth
