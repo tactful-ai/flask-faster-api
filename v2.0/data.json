@@ -1,0 +1,37 @@
+{
+    "courses": [
+        {
+            "id": 0,
+            "title": "CS106",
+            "duration": 30,
+            "teachers": [
+                "Seif",
+                "Ahmed",
+                "Mostafa"
+            ],
+            "studentsCount": 0
+        },
+        {
+            "id": 1,
+            "title": "CS110",
+            "duration": 45,
+            "teachers": [
+                "Seif",
+                "Ahmed",
+                "Mohamed"
+            ],
+            "studentsCount": 0
+        },
+        {
+            "id": 2,
+            "title": "CS231",
+            "duration": 60,
+            "teachers": [
+                "Seif",
+                "Ahmed",
+                "Mahmoud"
+            ],
+            "studentsCount": 0
+        }
+    ]
+}
