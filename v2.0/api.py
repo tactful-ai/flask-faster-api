@@ -3,16 +3,27 @@ from imports import *
 from data import courses
 
 app = Flask(__name__)
-api = Api(app, version='2.0', title='Courses API v2.0')
 
-token = " "
+
+authorizations = {
+    'apikey': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'Authorization'
+    }
+}
+
+api = Api(app, version='2.0', title='Courses API v2.0',
+          authorizations=authorizations)
+
+app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
 
 
 def auth_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        #token = request.args.get('token')
-        print(token)
+        token = request.args.get('token')
+
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
 
@@ -30,27 +41,21 @@ def auth_required(f):
 def header_auth(f):
     @wraps(f)
     def decorator(*args, **kwargs):
-        auth_header = request.headers.get(
-            'Authorization')  # get Auth part from header
-        if auth_header:  # check if we get it, if yes save it, if no empty string
-            auth_token = auth_header.split(" ")[1]
-            print(auth_token)
-        else:
-            auth_token = ''
+        auth_token = request.headers.get('Authorization')
+
+        if not auth_token:  # check if we get it, if yes save it, if no empty string
+            return jsonify({'message': 'Token is missing!'})
 
         try:
             # decoding the token to get the data
             data = jwt.decode(auth_token, app.config['SECRET_KEY'])
         except Exception as e:
             print(e)
-            return jsonify({'message': 'Token is invalid!'}), 403
+            return jsonify({'message': 'Token is invalid!'})
 
         return f(*args, **kwargs)
 
     return decorator
-
-
-app.config['SECRET_KEY'] = 'Th1s1ss3cr3t'
 
 course = api.model('Course', {
     'id': fields.Integer(readonly=True, description='The task course identifier'),
@@ -71,9 +76,7 @@ token_model = api.model('Token', {
     'token': fields.String(required=True, description='The token required for authentication'),
 })
 
-token_parser = api.parser()
-token_parser.add_argument('token', type=String)
-
+#token is missing error: I put security='apikey' in the api object declaration!!!!!
 
 @api.route('/login')
 @api.doc(params={'username': 'username', 'password': 'password'})
@@ -91,20 +94,10 @@ class Login(Resource):
 
         return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
-
-token_parser = api.parser()
-token_parser.add_argument('token')
-
-
 @api.route('/courses')
 class List(Resource):
-    @api.expect(token_model)
-    def post(self):
-        args = token_parser.parse_args()
-        token = args['token']
-        return jsonify({'courses': 'okkkkk'})
-
-    # @auth_required
+    @api.doc(security='apikey')
+    @header_auth
     def get(self):
         return jsonify({'courses': courses})
 
@@ -119,7 +112,9 @@ parser.add_argument('studentsCount')
 
 @api.route('/courses/add')
 class Add(Resource):
+    @api.doc(security='apikey')
     @api.expect(course)
+    @header_auth
     def post(self):
         args = parser.parse_args()  # api.payload = args
         courses.append(args)
