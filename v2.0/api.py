@@ -57,6 +57,7 @@ def header_auth(f):
 
     return decorator
 
+
 course = api.model('Course', {
     'id': fields.Integer(readonly=True, description='The task course identifier'),
     'title': fields.String(required=True, description='The course title'),
@@ -76,7 +77,8 @@ token_model = api.model('Token', {
     'token': fields.String(required=True, description='The token required for authentication'),
 })
 
-#token is missing error: I put security='apikey' in the api object declaration!!!!!
+# token is missing error: I put security='apikey' in the api object declaration!!!!!
+
 
 @api.route('/login')
 @api.doc(params={'username': 'username', 'password': 'password'})
@@ -93,6 +95,7 @@ class Login(Resource):
             return jsonify({'token': token.decode('UTF-8')})
 
         return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
 
 @api.route('/courses')
 class List(Resource):
@@ -118,7 +121,7 @@ class Add(Resource):
     def post(self):
         args = parser.parse_args()  # api.payload = args
         courses.append(args)
-        return jsonify({'courses': courses})
+        return jsonify({'Updated Courses': courses})
 
 
 @api.route('/courses/edit/<int:course_id>')
@@ -179,9 +182,10 @@ class Query(Resource):
 
         if 'teachers' in args:
             teacher = request.args.get("teachers")
-            course = [
-                course for course in courses for name in course['teachers'] if name == teacher]
-            result.append(course)
+            for course in courses:
+                for name in course['teachers']:
+                    if name == teacher:
+                        result.append(course)
 
         if (len(result) != 0):
             return jsonify({'courses': result})
