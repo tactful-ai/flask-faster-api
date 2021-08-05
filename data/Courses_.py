@@ -2,7 +2,7 @@ courses = [
         {'name': "Python Programming Course",
          'course_id': 0,
          'duration': "10",
-         'teachers': ['ahmed', 'omar', 'mahmoud']
+         'teachers': ['ahmed', 'omar', 'michel']
          },
 
         {'name': "Java Programming Course",
