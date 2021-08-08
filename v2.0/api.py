@@ -136,32 +136,40 @@ python2restplus = {
     'enum': Enum,
 }
 
-modeltemp = dict()
 
-types = get_type_hints(List.get)
-types = dict(types)
+def create_model(types) -> dict:
+    modeltemp = dict()
+    for type in types:
+        ans = types[type]
+        modeltemp[type] = python2restplus[ans]
 
-for type in types:
-    ans = str(types[type])
-
-    if ans.find('typing') == -1:
-        ans = ans.split(" ")[1]
-        ans = ans.replace("'", "")
-        ans = ans.replace(">", "")
-        k = str(type)
-        if k != 'return':
-            modeltemp[k] = python2restplus[ans]
-
-    else:
-        k = str(type)
-        if k != 'return':
-            # for typing module stuff (optional, union, ....) which is not in the types dict
-            modeltemp[k] = ans
-print("----------------------------------------------------------")
-print(modeltemp)
-print("----------------------------------------------------------")
+    return modeltemp
 
 
+# types = get_type_hints(List.get)
+# types = dict(types)
+# print("teadfadas")
+# print(types)
+
+# for type in types:
+#     ans = str(types[type])
+
+#     if ans.find('typing') == -1:
+#         ans = ans.split(" ")[1]
+#         ans = ans.replace("'", "")
+#         ans = ans.replace(">", "")
+#         k = str(type)
+#         if k != 'return':
+#             modeltemp[k] = python2restplus[ans]
+
+#     else:
+#         k = str(type)
+#         if k != 'return':
+#             # for typing module stuff (optional, union, ....) which is not in the types dict
+#             modeltemp[k] = ans
+# print("----------------------------------------------------------")
+# print(modeltemp)
+# print("----------------------------------------------------------")
 # -------------------------------------------------------------------
 parser = api.parser()
 parser.add_argument('id')
