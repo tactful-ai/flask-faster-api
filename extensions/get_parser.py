@@ -4,12 +4,11 @@ import inspect
 from fastapi import Query, Body, Cookie, Header, Path
 
 
-def get_parser(func: Callable) -> reqparse:
-    signature = inspect.signature(func)
+def get_parser(signature, parameters) -> reqparse:
     parser = reqparse.RequestParser()
     location: str = 'args'  # default location -> 'args'
 
-    for param in signature.parameters.values():
+    for param in parameters.values():
         if param.name == "self":
             continue
 
@@ -28,17 +27,16 @@ def get_parser(func: Callable) -> reqparse:
         elif str(param).find('Path') != -1:
             continue
 
-        print("name : {}".format(param.name))
-        print("param : {}".format(param))
-        print("location : {}".format(location))
-        print("default : {}".format(param.default))
-        print("annotation : {}\n".format(signature.parameters[str(param.name)].annotation))
+        # print("name : {}".format(param.name))
+        # print("param : {}".format(param))
+        # print("location : {}".format(location))
+        # print("default : {}".format(param.default))
+        # print("annotation : {}\n".format(parameters[str(param.name)].annotation))
 
-        parser.add_argument(str(param.name), type=signature.parameters[str(param.name)].annotation,
+        parser.add_argument(str(param.name), type=parameters[str(param.name)].annotation,
                             location=location)
 
     return parser
-
 
 # full example to how get_parser() work.
 
@@ -58,7 +56,9 @@ class CourseEnroll(Resource):
     def post(self, id_=Path(None), name: str = Query(None), course_name: str = Body(None),
              duration: float = Header(None)):
              
-        student_args = get_parser(CourseEnroll.post).parse_args()  #  <--- get_parser()
+        signature = inspect.signature(CourseEnroll.post)
+        parameters = dict(signature.parameters)
+        student_args = get_parser(signature, parameters).parse_args() #  <--- get_parser()
         print(id_)
         print(student_args["name"])          #get name from Query  
         print(student_args["course_name"])   #get course_name from Body  
