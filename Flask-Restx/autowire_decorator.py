@@ -8,28 +8,25 @@ import inspect
 def autowire_decorator(path):
     def decorator(func):
 
-        #model = get_model(func.__annotations__['return'])
-        #path_params = get_path_params(path)
+        params_return = func.__annotations__
+        modelName = func.__qualname__.split('.')[0]
+        # isPrimitive, api_model = create_model(
+        #    params_return.get('return'), modelName)
+        # if(not isPrimitive):
+        #    api_model = api.model(modelName, api_model)
+        path_params = ExtractPathParams(path)
         signature = inspect.signature(func)
+
         parameters = dict(signature.parameters)
         parameters.pop('self')
-        # for param in path_params:
-        #    parameters.pop(param, None)
 
-        #parser = get_parser(signature,parameters)
-
-        # test_example
-        model = api.model('Course', {
-            'name': fields.String(required=True, description='The course name'),
-            'duration': fields.Integer(required=True, description='The course duration'),
-            'teachers': fields.List(fields.String, description='The course teachers'),
-        })
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', type=str, help='The course name')
+        for param in path_params:
+            parameters.pop(param, None)
+        parser = get_parser(signature, parameters)
 
         @wraps(func)
         @api.expect(parser)
-        @api.marshal_with(model)
+        @api.marshal_with(api_model)
         def wrapper(*args, **kwargs):
             args_parser = parser.parse_args()
             return func(*args, **args_parser, **kwargs)
