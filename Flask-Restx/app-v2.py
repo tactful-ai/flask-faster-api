@@ -1,3 +1,4 @@
+import inspect
 from flask import Flask, Blueprint, jsonify, request
 import flask
 from flask.helpers import url_for
@@ -35,18 +36,16 @@ course = api.model('Course', {
 
 def autowire_decorator(path):
     def decorator(func):
-        params = func.__annotations__
 
-        print(path)
-        # return_params=params['return']
-        #model = get_model(return_params)
-        #params.pop('return', None)
-
+        #model = get_model(func.__annotations__['return'])
         #path_params = get_path_params(path)
+        signature = inspect.signature(func)
+        parameters = dict(signature.parameters)
+        parameters.pop('self')
         # for param in path_params:
-        #    params.pop(param, None)
+        #    parameters.pop(param, None)
 
-        #parser = get_parser(params)
+        #parser = get_parser(signature,parameters)
 
         # test_example
         model = api.model('Course', {
@@ -55,24 +54,26 @@ def autowire_decorator(path):
             'teachers': fields.List(fields.String, description='The course teachers'),
         })
         parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, help='The course name')
-        parser.add_argument('duration', type=int, help='The course duration')
-        parser.add_argument(
-            'teachers', type=List[str], help='The course teachers')
+        parser.add_argument('username', type=str, help='The course name')
 
         @wraps(func)
         @api.expect(parser)
         @api.marshal_with(model)
         def wrapper(*args, **kwargs):
             args_parser = parser.parse_args()
-            return func(*args, *args_parser.values(), **kwargs)
+            return func(*args, **args_parser, **kwargs)
         return wrapper
     return decorator
 
 
 class CourseDAO(object):
     counter = 0
-    courses = []
+    courses = [{
+        'id': 1,
+        'name': 'Python',
+        'duration': 300,
+        'teachers': ['John', 'Sara', 'Steve']
+    }]
 
     @staticmethod
     def get(id):
@@ -125,7 +126,8 @@ class Course(Resource):
     @ courses_ns.doc('get_course', security='apikey')
     # @auth
     # @courses_ns.marshal_with(course)
-    def get(self, id):
+    @autowire_decorator('/<int:id>')
+    def get(self, id, username):
         return CourseDAO.get(id)
 
     @ courses_ns.doc('update_course', security='apikey')
