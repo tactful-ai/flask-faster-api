@@ -1,6 +1,13 @@
-from flask_restx.fields import String
+from enum import Enum
+import enum
+from typing import TypeVar, Mapping, Sequence, Any, get_type_hints, Optional, Union
+from inspect import signature
+import inspect
+import typing
+from flask_restx.fields import Integer, String
 from imports import *
 from data import courses
+
 
 app = Flask(__name__)
 
@@ -66,6 +73,7 @@ course = api.model('Course', {
     'studentsCount': fields.Integer(required=True, description='The course students count'),
 })
 
+
 editedCourse = api.model('Course', {
     'title': fields.String,
     'duration': fields.Integer,
@@ -101,10 +109,60 @@ class Login(Resource):
 class List(Resource):
     @api.doc(security='apikey')
     @header_auth
-    def get(self):
+    def get(self, auth: Union[str, int], grade: Optional[int], allgrades: enum,  filter: str, name: str = 'Unknown') -> dict:
         return jsonify({'courses': courses})
 
 
+# --------------------------------------------------------------------------------
+# getting the return type
+# return_type = inspect.signature(List.get)
+# ans = return_type.return_annotation
+# ans = str(ans)
+# ans = ans.split(" ")[1]
+# ans = ans.replace("'", "")
+# ans = ans.replace(">", "")
+# print(ans)
+
+python2restplus = {
+    'str': fields.String,
+    'datetime': fields.DateTime,
+    'time': fields.String,
+    'bool': fields.Boolean,
+    'int': fields.Integer,
+    'float': fields.Float,
+    'relation': fields.Nested,
+    'list': fields.List,
+    'dict': Any,
+    'enum': Enum,
+}
+
+modeltemp = dict()
+
+types = get_type_hints(List.get)
+types = dict(types)
+
+for type in types:
+    ans = str(types[type])
+
+    if ans.find('typing') == -1:
+        ans = ans.split(" ")[1]
+        ans = ans.replace("'", "")
+        ans = ans.replace(">", "")
+        k = str(type)
+        if k != 'return':
+            modeltemp[k] = python2restplus[ans]
+
+    else:
+        k = str(type)
+        if k != 'return':
+            # for typing module stuff (optional, union, ....) which is not in the types dict
+            modeltemp[k] = ans
+print("----------------------------------------------------------")
+print(modeltemp)
+print("----------------------------------------------------------")
+
+
+# -------------------------------------------------------------------
 parser = api.parser()
 parser.add_argument('id')
 parser.add_argument('title')
