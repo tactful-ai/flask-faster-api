@@ -82,8 +82,7 @@ def autowire_decorator(path):
 course_Model = dict({
     'id': int,
     'title': str,
-    'duration': int,
-    'teachers': List[str]
+    'duration': int
 })
 
 
@@ -91,10 +90,8 @@ class CourseDAO(object):
     counter = 0
     courses = [{
         'id': 1,
-        'name': 'Python',
-        'duration': 300,
-        'teachers': ['John', 'Sara', 'Steve']
-    }]
+        'title': 'Python',
+        'duration': 300}]
 
     @ staticmethod
     def get(id):
@@ -148,11 +145,9 @@ class Course(Resource):
     # @auth
     # @courses_ns.marshal_with(course)
     @ autowire_decorator('/<int:id>')
-    def get(self, id) -> int:
-        print(CourseDAO.get(id))
+    def get(self, id) -> course_Model:
         course_data = CourseDAO.get(id)
-        print(course_data['name'])
-        return course_data['duration']
+        return course_data
 
     @ courses_ns.doc('update_course', security='apikey')
     # @auth
