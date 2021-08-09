@@ -1,8 +1,15 @@
-import flask
-from flask_restx import Api, Resource, fields, marshal_with, reqparse
-from typing import List
+from flask_restx import Api
 from functools import wraps
 import inspect
+from .model import create_model
+from .path_param import ExtractPathParams
+from .parser_api import get_parser
+api = Api()
+
+
+def register_api(api_main):
+    global api
+    api = api_main
 
 
 def autowire_decorator(path):
@@ -18,12 +25,9 @@ def autowire_decorator(path):
             if(type(params_return) != dict):
                 params_return = {'data': params_return}
                 isPrimitive = True
-            print(params_return)
             api_model = create_model(
                 params_return)
-            print(api_model)
             api_model = api.model(modelName, api_model)
-        print(api_model)
         path_params = ExtractPathParams(path)
         signature = inspect.signature(func)
         parameters = dict(signature.parameters)
@@ -44,4 +48,3 @@ def autowire_decorator(path):
                 return func(*args, **args_parser, **kwargs)
         return wrapper
     return decorator
-
