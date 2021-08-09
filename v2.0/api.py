@@ -1,3 +1,4 @@
+from flask_restx import fields
 from enum import Enum
 import enum
 from typing import TypeVar, Mapping, Sequence, Any, get_type_hints, Optional, Union
@@ -85,6 +86,16 @@ token_model = api.model('Token', {
     'token': fields.String(required=True, description='The token required for authentication'),
 })
 
+model2 = api.model('testmodel', {
+    'data': fields.String(fields.String),
+})
+
+kk = dict()
+kk['lol'] = fields.String(fields.String)
+kk = api.model('saa', kk)
+
+print("kkkkkkkkk: ", kk)
+
 # token is missing error: I put security='apikey' in the api object declaration!!!!!
 
 
@@ -109,7 +120,7 @@ class Login(Resource):
 class List(Resource):
     @api.doc(security='apikey')
     @header_auth
-    def get(self, auth: Union[str, int], grade: Optional[int], allgrades: enum,  filter: str, name: str = 'Unknown') -> dict:
+    def get(self, auth: Union[str, int], grade: Optional[int], allgrades: enum,  filter: dict, name: str = 'Unknown') -> dict:
         return jsonify({'courses': courses})
 
 
@@ -123,6 +134,16 @@ class List(Resource):
 # ans = ans.replace(">", "")
 # print(ans)
 
+
+class DictItem(fields.Raw):
+    def output(self, key, obj, *args, **kwargs):
+        try:
+            dct = getattr(obj, self.attribute)
+        except AttributeError:
+            return {}
+        return dct or {}
+
+
 python2restplus = {
     'str': fields.String,
     'datetime': fields.DateTime,
@@ -132,44 +153,37 @@ python2restplus = {
     'float': fields.Float,
     'relation': fields.Nested,
     'list': fields.List,
-    'dict': Any,
+    'dict': DictItem,
     'enum': Enum,
 }
 
+modeltemp = dict()
 
-def create_model(types) -> dict:
-    modeltemp = dict()
-    for type in types:
-        ans = types[type]
-        modeltemp[type] = python2restplus[ans]
+types = get_type_hints(List.get)
+print("TESSST", types)
+types = dict(types)
+print(types)
 
-    return modeltemp
+for type in types:
+    ans = str(types[type])
 
+    if ans.find('typing') == -1:
+        ans = ans.split(" ")[1]
+        ans = ans.replace("'", "")
+        ans = ans.replace(">", "")
+        k = str(type)
+        if k != 'return':
+            modeltemp[k] = python2restplus[ans]
 
-# types = get_type_hints(List.get)
-# types = dict(types)
-# print("teadfadas")
-# print(types)
+    else:
+        k = str(type)
+        if k != 'return':
+            # for typing module stuff (optional, union, ....) which is not in the types dict
+            modeltemp[k] = ans
+print("----------------------------------------------------------")
+print(modeltemp)
+print("----------------------------------------------------------")
 
-# for type in types:
-#     ans = str(types[type])
-
-#     if ans.find('typing') == -1:
-#         ans = ans.split(" ")[1]
-#         ans = ans.replace("'", "")
-#         ans = ans.replace(">", "")
-#         k = str(type)
-#         if k != 'return':
-#             modeltemp[k] = python2restplus[ans]
-
-#     else:
-#         k = str(type)
-#         if k != 'return':
-#             # for typing module stuff (optional, union, ....) which is not in the types dict
-#             modeltemp[k] = ans
-# print("----------------------------------------------------------")
-# print(modeltemp)
-# print("----------------------------------------------------------")
 # -------------------------------------------------------------------
 parser = api.parser()
 parser.add_argument('id')
