@@ -3,8 +3,10 @@ from flask import Flask, Blueprint, jsonify, request
 import flask
 from flask.helpers import url_for
 from flask_restx import Api, Resource, fields, marshal_with, reqparse
-from typing import List, OrderedDict, get_type_hints
+from typing import Dict, List, Optional, OrderedDict, get_type_hints
 from functools import wraps
+import six
+from pydantic import BaseModel
 
 from werkzeug import Request
 from auth import auth, encode_jwt
@@ -41,13 +43,22 @@ def autowire_decorator(path):
 
         params_return = func.__annotations__
         modelName = func.__qualname__.split('.')[0]
-        # isPrimitive, api_model = create_model(
-        #    params_return.get('return'), modelName)
-        # if(not isPrimitive):
-        #    api_model = api.model(modelName, api_model)
+        params_return = params_return.get('return')
+        isPrimitive = False
+        if(params_return == None):
+            api_model = api.model(modelName, {})
+        else:
+            if(type(params_return) != dict):
+                params_return = {'data': params_return}
+                isPrimitive = True
+            print(params_return)
+            api_model = create_model(
+                params_return)
+            print(api_model)
+            api_model = api.model(modelName, api_model)
+        print(api_model)
         path_params = ExtractPathParams(path)
         signature = inspect.signature(func)
-
         parameters = dict(signature.parameters)
         parameters.pop('self')
 
@@ -57,19 +68,23 @@ def autowire_decorator(path):
 
         @wraps(func)
         @api.expect(parser)
-        # @api.marshal_with(api_model)
+        @api.marshal_with(api_model)
         def wrapper(*args, **kwargs):
             args_parser = parser.parse_args()
-            return func(*args, **args_parser, **kwargs)
+            if(isPrimitive):
+                return {'data': func(*args, **args_parser, **kwargs)}
+            else:
+                return func(*args, **args_parser, **kwargs)
         return wrapper
     return decorator
 
 
-course_Model = {
-    'name': str,
+course_Model = dict({
+    'id': int,
+    'title': str,
     'duration': int,
     'teachers': List[str]
-}
+})
 
 
 class CourseDAO(object):
@@ -81,33 +96,33 @@ class CourseDAO(object):
         'teachers': ['John', 'Sara', 'Steve']
     }]
 
-    @staticmethod
+    @ staticmethod
     def get(id):
         for course in CourseDAO.courses:
             if course['id'] == id:
                 return course
         api.abort(404, "Course {} doesn't exist".format(id))
 
-    @staticmethod
+    @ staticmethod
     def create(data):
         course = data
         course['id'] = CourseDAO.counter = CourseDAO.counter + 1
         CourseDAO.courses.append(course)
         return course
 
-    @staticmethod
+    @ staticmethod
     def update(id, data):
         course = CourseDAO.get(id)
         course.update(data)
         return course
 
-    @staticmethod
+    @ staticmethod
     def delete(id):
         course = CourseDAO.get(id)
         CourseDAO.courses.remove(course)
 
 
-@courses_ns.route('/')
+@ courses_ns.route('/')
 class CourseList(Resource):
     @ courses_ns.doc('list_courses', security='apikey')
     # @auth
@@ -116,7 +131,7 @@ class CourseList(Resource):
         return CourseDAO.courses
 
     @ courses_ns.doc('create_course', security='apikey')
-    @ autowire_decorator('/')
+    # @ autowire_decorator('/')
     def post(self, duration: int, teachers: List[str], name: str = Body(None)) -> course_Model:
         course_data = {
             'name': name,
@@ -127,17 +142,17 @@ class CourseList(Resource):
         return CourseDAO.create(course_data), 201
 
 
-@courses_ns.route('/<int:id>')
+@ courses_ns.route('/<int:id>')
 class Course(Resource):
     @ courses_ns.doc('get_course', security='apikey')
     # @auth
     # @courses_ns.marshal_with(course)
-    @autowire_decorator('/<int:id>')
-    def get(self, id) -> str:
+    @ autowire_decorator('/<int:id>')
+    def get(self, id) -> int:
         print(CourseDAO.get(id))
         course_data = CourseDAO.get(id)
         print(course_data['name'])
-        return str(course_data['name'])
+        return course_data['duration']
 
     @ courses_ns.doc('update_course', security='apikey')
     # @auth
@@ -154,7 +169,7 @@ class Course(Resource):
         return '', 204
 
 
-@auth_ns.route('/login')
+@ auth_ns.route('/login')
 class Login(Resource):
     @ auth_ns.doc('login')
     @ auth_ns.response(200, 'Success')

@@ -10,13 +10,22 @@ def autowire_decorator(path):
 
         params_return = func.__annotations__
         modelName = func.__qualname__.split('.')[0]
-        # isPrimitive, api_model = create_model(
-        #    params_return.get('return'), modelName)
-        # if(not isPrimitive):
-        #    api_model = api.model(modelName, api_model)
+        params_return = params_return.get('return')
+        isPrimitive = False
+        if(params_return == None):
+            api_model = api.model(modelName, {})
+        else:
+            if(type(params_return) != dict):
+                params_return = {'data': params_return}
+                isPrimitive = True
+            print(params_return)
+            api_model = create_model(
+                params_return)
+            print(api_model)
+            api_model = api.model(modelName, api_model)
+        print(api_model)
         path_params = ExtractPathParams(path)
         signature = inspect.signature(func)
-
         parameters = dict(signature.parameters)
         parameters.pop('self')
 
@@ -29,6 +38,10 @@ def autowire_decorator(path):
         @api.marshal_with(api_model)
         def wrapper(*args, **kwargs):
             args_parser = parser.parse_args()
-            return func(*args, **args_parser, **kwargs)
+            if(isPrimitive):
+                return {'data': func(*args, **args_parser, **kwargs)}
+            else:
+                return func(*args, **args_parser, **kwargs)
         return wrapper
     return decorator
+
