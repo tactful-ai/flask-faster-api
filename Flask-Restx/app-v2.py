@@ -6,12 +6,9 @@ from functools import wraps
 
 from werkzeug import Request
 from auth import auth, encode_jwt
-
-from Autowire_Decorator import autowire_decorator
-
 from fastapi import Body
+from autowire_decorator import autowire_decorator
 app = Flask(__name__)
-
 authorizations = {
     'apikey': {
         'type': 'apiKey',
