@@ -1,17 +1,41 @@
-<h1 align="center"><Flask Faster></h1>
+==============
+Flask Faster
+==============
 
-<p align="center"><A Fast API style support for Flask. Gives you MyPy types with the flexibility of flask></p>
+.. image:: https://secure.travis-ci.org/noirbizarre/flask-restplus.svg?branch=master
+    :target: https://travis-ci.org/noirbizarre/flask-restplus?branch=master
+    :alt: Build status
+.. image:: https://coveralls.io/repos/noirbizarre/flask-restplus/badge.svg?branch=master
+    :target: https://coveralls.io/r/noirbizarre/flask-restplus?branch=master
+    :alt: Code coverage
+.. image:: https://readthedocs.org/projects/flask-restplus/badge/?version=latest
+    :target: https://flask-restplus.readthedocs.io/en/latest/
+    :alt: Documentation status
+.. image:: https://img.shields.io/pypi/l/flask-restplus.svg
+    :target: https://pypi.org/project/flask-restplus
+    :alt: License
+.. image:: https://img.shields.io/pypi/pyversions/flask-restplus.svg
+    :target: https://pypi.org/project/flask-restplus
+    :alt: Supported Python versions
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/noirbizarre/flask-restplus
+   :target: https://gitter.im/noirbizarre/flask-restplus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 
-## Author
+Flask-Faster is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
 
-**Seif Ashraf**
 
-- [Profile](https://github.com/seifashraf1 "Seif Ashraf")
-- [Email](mailto:seifashraf145@gmail.com?subject=Hi "Hi!")
+Compatibility
+=============
 
-## 🤝 Support
+Flask-Faster requires Python 2.7 or 3.4+.
 
-Contributions, issues, and feature requests are welcome!
 
-Give a ⭐️ if you like this project!
+Installation
+============
+
+You can install Flask-Faster with pip:
+
+.. code-block:: console
+
+    $ pip install flask-faster
