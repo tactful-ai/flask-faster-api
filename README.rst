@@ -13,7 +13,7 @@ Flask-Faster is a Fast API style support for Flask. It Gives you MyPy types with
 Compatibility
 =============
 
-Flask-Faster requires Python 2.7 or 3.4+.
+Flask-Faster requires Python 2.7 or 3.4+. 
 
 
 
