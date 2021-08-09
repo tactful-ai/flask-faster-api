@@ -2,7 +2,8 @@
 Flask Faster
 ==============
 
-.. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   :alt: License
+.. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
+    :alt: License
 
 
 
