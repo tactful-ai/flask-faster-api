@@ -3,11 +3,7 @@
 
 name: Python package
 
-on:
-  push:
-    branches:
-      - main
-      - ahmed_ihab
+on: [push]
 
 jobs:
   build:
