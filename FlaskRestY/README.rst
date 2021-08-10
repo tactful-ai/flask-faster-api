@@ -12,6 +12,7 @@ Flask RESTY
     :alt: Supported Python versions
 
 
+
 Flask-RESTY is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
 
 
@@ -32,7 +33,7 @@ You can install Flask-RESTY with pip:
 
 .. code-block:: console
 
-    $ pip install flask-resty
+    $ pip install flaskresty
     
 
 Quick start
