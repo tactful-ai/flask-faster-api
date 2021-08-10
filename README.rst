@@ -36,7 +36,7 @@ Quick start
 
 With Flask-RESTY and the autowire decorator feature, parsing path parameters and creating api models is done using only one decorator! 
 
-.. code-block:: console
+.. code-block:: python
 
     from flask import Flask
     from flask_restx import Api, Resource, fields
