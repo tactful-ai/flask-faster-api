@@ -53,7 +53,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Publishing to PyPi
       env:
-        PYPI_TOKEN: pypi-AgEIcHlwaS5vcmcCJDY5YjMyZGZhLTU3OTEtNGFhYS1hY2RiLTllZmQzNjM5ZDEzNQACO3sicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJmbGFza3Jlc3R5Il19LCAidmVyc2lvbiI6IDF9AAAGINXi3iswvvL7jnc9l7Ak3eHTc3UWSxsnL0dulcLun3qf 
+        PYPI_TOKEN: pypi-AgEIcHlwaS5vcmcCJDY5YjMyZGZhLTU3OTEtNGFhYS1hY2RiLTllZmQzNjM5ZDEzNQACO3sicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJmbGFza3Jlc3R5Il19LCAidmVyc2lvbiI6IDF9AAAGINXi3iswvvL7jnc9l7Ak3eHTc3UWSxsnL0dulcLun3qf
       run: |
        cd FlaskRestY
        poetry config pypi-token.pypi $PYPI_TOKEN
