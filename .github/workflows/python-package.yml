@@ -56,5 +56,6 @@ jobs:
         username: flaskresty
         password: FlaskRestY@Tactful
       run: |
+       cd FlaskRestY
        poetry build
        poetry publish
