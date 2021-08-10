@@ -2,3 +2,5 @@ Flask
 Flask-JWT-Extended            
 flask-restx
 fastapi
+pylint
+mypy
