@@ -1,5 +1,5 @@
 ==============
-Flask Faster
+Flask RESTY
 ==============
 
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
@@ -15,7 +15,7 @@ Flask-Faster is a Fast API style support for Flask. It Gives you MyPy types with
 Compatibility
 =============
 
-Flask-Faster requires Python 2.7 or 3.4+. 
+Flask-RESTY requires Python 2.7 or 3.4+. 
 
 
 
@@ -24,11 +24,11 @@ Flask-Faster requires Python 2.7 or 3.4+.
 Installation
 ============
 
-You can install Flask-Faster with pip:
+You can install Flask-RESTY with pip:
 
 .. code-block:: console
 
-    $ pip install flask-faster
+    $ pip install flask-resty
     
 
 
@@ -37,7 +37,7 @@ You can install Flask-Faster with pip:
 Contributors
 ============
 
-Flask-Faster is brought to you by @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
+Flask-RESTY is brought to you by @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
 
 
 
