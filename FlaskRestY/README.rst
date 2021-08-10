@@ -7,7 +7,9 @@ Flask RESTY
     
 .. image:: https://img.shields.io/github/stars/tactful-ai/flask-faster-api?style=social   :alt: GitHub Repo stars
 
-.. image:: https://img.shields.io/pypi/pyversions/flaskresty   :alt: Supported Python versions
+.. image:: https://img.shields.io/pypi/pyversions/flaskresty   
+    :target: https://pypi.org/project/flaskresty
+    :alt: Supported Python versions
 
 
 Flask-RESTY is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
