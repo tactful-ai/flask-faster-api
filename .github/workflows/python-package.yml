@@ -53,8 +53,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Publishing to PyPi
       env:
-        username: flaskresty
-        password: FlaskRestY@Tactful
+        Username: flaskresty
+        Password: FlaskRestY@Tactful
       run: |
        cd FlaskRestY
        poetry build
