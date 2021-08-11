@@ -1,4 +1,4 @@
-from flaskresty import __version__
+from flask_restx_square import __version__
 
 
 def test_version():

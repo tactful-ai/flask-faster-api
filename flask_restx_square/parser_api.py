@@ -23,7 +23,7 @@ def get_parser(signature, parameters) -> reqparse:
             location = 'cookies'
 
         elif str(param).find('Path') != -1:
-            location = 'path'
+            continue
         else:
             location = 'args'
 

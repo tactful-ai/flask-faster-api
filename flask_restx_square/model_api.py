@@ -16,7 +16,7 @@ python2restplus = {
 }
 
 
-def create_model(types, descriptions):
+def create_model(types, descriptions={}):
     modeltemp = dict()
 
     for type in types:

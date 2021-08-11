@@ -4,8 +4,8 @@ replace @api.marshal_with decorator and
 import inspect
 from functools import wraps
 from flask_restx import Api
-from flaskresty.model_api import create_model
-from flaskresty.parser_api import get_parser
+from flask_restx_square.model_api import create_model
+from flask_restx_square.parser_api import get_parser
 api = Api()
 
 
