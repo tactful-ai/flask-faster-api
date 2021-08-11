@@ -51,7 +51,7 @@ With Flask-RESTY and the autowire decorator feature, parsing path parameters and
     app = Flask(__name__)
 
 
-    api = Api(version='1.0', title='Courses API')
+    api = Api(app, version='1.0', title='Courses API')
 
     autowire_decorator.register_api(api)
 
