@@ -6,6 +6,12 @@ from datetime import date
 import unittest
 from enum import Enum
 
+#Testing Methodology
+#send return types example as a dict to the function to simulate the output of the annotations function
+#let create_model() process input and get its output
+#compare its output types with a sample model 
+#NOTE: typing.List needs comparing its type of fields.List with the create_model output type cuz idk why     
+
 model = {
             'id': fields.Integer,
             'title': fields.String,
@@ -37,21 +43,22 @@ class ModelMatcher:
         self.model = model
 
     def __eq__(self, other):
-        return self.model['id'] == other['id'] and \
-                self.model['title'] == other['title'] and \
-                self.model['duration'] == other['duration'] and \
+
+        return type(self.model['id']) == other['id'] and \
+                type(self.model['title']) == other['title'] and \
+                type(self.model['duration']) == other['duration'] and \
                 type(self.model['teachers']) == type(other['teachers']) and \
                 type(self.model['intlist']) == type(other['intlist']) and \
-                self.model['bool'] == other['bool'] and \
-                self.model['float'] == other['float'] and \
-                self.model['dict'] == other['dict']
+                type(self.model['bool']) == other['bool'] and \
+                type(self.model['float']) == other['float'] and \
+                type(self.model['dict']) == other['dict']
         
         
-
+descriptions = dict()
 
 class TestModel(unittest.TestCase):        
         def test_one(self):
-            self.assertEqual(ModelMatcher(create_model(input)), model)
+            self.assertEqual(ModelMatcher(create_model(input, descriptions)), model)
             
             
 
