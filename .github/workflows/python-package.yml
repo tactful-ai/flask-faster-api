@@ -3,7 +3,13 @@
 
 name: Python package
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -26,8 +32,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.7
-    - name: Display Python version
-      run: python -c "import sys; print(sys.version)"
     - name: Cache pip
       uses: actions/cache@v2
       with:
@@ -36,23 +40,45 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
           ${{ runner.os }}-
+    - name: Setup Poetry
+      uses: snok/install-poetry@v1
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
-        python -m pip install -r requirements.txt
-    - name: Setup Poetry
-      uses: snok/install-poetry@v1
-    - name: Poetry version
-      run: poetry --version
+        cd FlaskRestY
+        poetry install
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Cache pip
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          ${{ runner.os }}-
+    - name: Setup Poetry
+      uses: snok/install-poetry@v1
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        poetry install
     - name: Publishing to PyPi
-      if: matrix.os == 'ubuntu-latest'
       run: |
          cd FlaskRestY
          poetry publish --build -u flaskresty  -p FlaskRestY@Tactful
