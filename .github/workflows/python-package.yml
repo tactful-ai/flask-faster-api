@@ -81,5 +81,8 @@ jobs:
         cd FlaskRestY
         poetry install
     - name: Publishing to PyPi
+      env:
+        PYPI_USER: ${{ secrets.PYPI_USERNAME }}
+        PYPI_PASS: ${{ secrets.PYPI_PASSWORD }}
       run: |
-         poetry publish --build -u flaskresty  -p FlaskRestY@Tactful
+         poetry publish --build -u $PYPI_USER  -p $PYPI_PASS
