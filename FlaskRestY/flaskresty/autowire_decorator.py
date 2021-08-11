@@ -16,22 +16,42 @@ def register_api(api_main):
     api = api_main
 
 
+def get_params_description(doc):
+    """Get the parameters description from the docstring"""
+    params_description = {}
+    if doc is not None:
+        doc = doc.split('\n')
+        for line in doc:
+            print(line)
+            if ':' in line:
+                line = line.split(':')
+                line[0] = line[0].strip()
+                params_description[line[0]] = line[1]
+    return params_description
+
+
 def autowire_decorator(path):
     """The Autowire Decorator with a path parameter (the url/endpoint)"""
     def decorator(func):
         """The decorator that wraps the function"""
+        print(api.resources)
         params_return = func.__annotations__
         model_name = func.__qualname__.split('.')[0]
         params_return = params_return.get('return')
         isprimitive = False
+        params_return_des = {}
         if params_return is None:
             api_model = api.model(model_name, {})
         else:
-            if not isinstance(params_return, dict):
+            if (not isinstance(params_return, dict) and not inspect.isclass(params_return)):
                 params_return = {'data': params_return}
                 isprimitive = True
+            if(inspect.isclass(params_return)):
+                params_return_des = get_params_description(
+                    params_return.__doc__)
+                params_return = params_return.__annotations__
             api_model = create_model(
-                params_return)
+                params_return, params_return_des)
             api_model = api.model(model_name, api_model)
         path_params = ExtractPathParams(path)
         signature = inspect.signature(func)

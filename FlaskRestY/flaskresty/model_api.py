@@ -17,8 +17,7 @@ python2restplus = {
 }
 
 
-def create_model(types):
-    # this works with primitive types now
+def create_model(types, descriptions):
     modeltemp = dict()
 
     for type in types:
@@ -29,13 +28,17 @@ def create_model(types):
             key = ans.split("[")[0]
             fieldsParam = ans.split("[")[1].replace("]", "")
             type = str(type)
+            if descriptions.get(type) is None:
+                descriptions[type] = ""
             modeltemp[type] = python2restplus[key](
-                python2restplus[fieldsParam])
+                python2restplus[fieldsParam], description=descriptions[type])
         else:
             k = str(type)
             ans = ans.split(" ")[1]
             ans = ans.replace("'", "")
             ans = ans.replace(">", "")
             print("Primitive Type:  ", ans)
-            modeltemp[k] = python2restplus[ans]
+            if descriptions.get(k) is None:
+                descriptions[k] = ""
+            modeltemp[k] = python2restplus[ans](description=descriptions[k])
     return modeltemp
