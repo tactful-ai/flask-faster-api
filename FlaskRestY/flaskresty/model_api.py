@@ -11,9 +11,8 @@ python2restplus = {
     'int': fields.Integer,
     'float': fields.Float,
     'relation': fields.Nested,
-    'list': fields.List,
+    'typing.List': fields.List,
     'dict': fields.Raw,
-    'enum': Enum,
 }
 
 
@@ -24,7 +23,6 @@ def create_model(types, descriptions):
         ans = str(types[type])
 
         if ans.find('typing') != -1:
-            print("Complex Type:  ", ans)
             key = ans.split("[")[0]
             fieldsParam = ans.split("[")[1].replace("]", "")
             type = str(type)
