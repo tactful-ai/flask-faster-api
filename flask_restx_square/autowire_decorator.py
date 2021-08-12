@@ -6,13 +6,30 @@ from functools import wraps
 from flask_restx import Api
 from flask_restx_square.model_api import create_model
 from flask_restx_square.parser_api import get_parser
-api = Api()
+
+
+class ApiDecorator():
+    """The API Decorator"""
+
+    def __init__(self) -> None:
+        """Initialize the API decorator"""
+        self.api = Api()
+
+    def set_api(self, api: Api) -> None:
+        """Set the API"""
+        self.api = api
+
+    def get_api(self) -> Api:
+        """Get the API"""
+        return self.api
+
+
+API = ApiDecorator()
 
 
 def register_api(api_main):
     """Register The Main App Api"""
-    global api
-    api = api_main
+    API.set_api(api_main)
 
 
 def get_params_description(doc):
@@ -31,7 +48,7 @@ def get_params_description(doc):
 
 def autowire_decorator(func):
     """The Autowire Decorator that wraps the function"""
-
+    api = API.get_api()
     params_return = func.__annotations__
     model_name = func.__qualname__.split('.')[0]
     params_return = params_return.get('return')
@@ -43,7 +60,7 @@ def autowire_decorator(func):
         if (not isinstance(params_return, dict) and not inspect.isclass(params_return)):
             params_return = {'data': params_return}
             isprimitive = True
-        if(inspect.isclass(params_return)):
+        if inspect.isclass(params_return):
             params_return_des = get_params_description(
                 params_return.__doc__)
             params_return = params_return.__annotations__
@@ -54,7 +71,7 @@ def autowire_decorator(func):
     parameters = dict(signature.parameters)
     parameters.pop('self')
 
-    parser = get_parser(signature, parameters)
+    parser = get_parser(parameters)
 
     @wraps(func)
     @api.expect(parser)
