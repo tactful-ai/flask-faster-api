@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Any
-from flask_restx import fields   # type: ignore
+from flask_restx import fields   
 
 
 python2restplus = {
