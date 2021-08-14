@@ -46,6 +46,7 @@ jobs:
         python -m pip install flake8 pytest
         python -m pip install mypy
         python -m pip install pylint
+        pip install flask-restx
         poetry install
     - name: Lint with flake8
       run: |
