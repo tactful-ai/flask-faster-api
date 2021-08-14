@@ -15,29 +15,23 @@ def get_parser(parameters) -> reqparse:
     parser = reqparse.RequestParser()
 
     for param in parameters.values():
-        location: str = get_location(param)
+        location: str = get_param_location(param)
         annotation = parameters[str(param.name)].annotation
-
+        print(annotation)
         if location == 'Path':
             continue
-        if str(annotation).find('typing.List[str]') != -1:
-            parser.add_argument(str(param.name), type=str, action='append',
-                                location=location)
-        elif str(annotation).find('typing.List[int]') != -1:
-            parser.add_argument(str(param.name), type=int, action='append',
+        if str(annotation).find('typing.List') != -1:
+            list_type = get_list_type(annotation)
+            parser.add_argument(str(param.name), type=list_type, action='append',
                                 location=location)
 
-        elif str(annotation).find('typing.List[float]') != -1:
-            parser.add_argument(str(param.name), type=float, action='append',
-                                location=location)
         elif str(annotation).find('typing.Literal') != -1:
-
             res = get_literal_tuple(str(annotation))
             if res and len(res) > 0:
                 parser.add_argument(str(param.name), type=type(res[0]), required=True, choices=res,
                                     location=location)
         else:
-            parser.add_argument(str(param.name), type=parameters[str(param.name)].annotation,
+            parser.add_argument(str(param.name), type=annotation,
                                 location=location)
 
     return parser
@@ -58,9 +52,9 @@ def get_literal_tuple(annotation):
     return None
 
 
-def get_location(param) -> str:
+def get_param_location(param) -> str:
     """
-    take param and return his location.
+    take a param and return his location.
     """
     if str(param).find('Query') != -1:
         return 'args'
@@ -78,3 +72,22 @@ def get_location(param) -> str:
         return 'Path'
 
     return 'args'
+
+
+def get_list_type(annotation):
+    """
+    return type of given list
+    """
+    if str(annotation).find('typing.List[str]') != -1:
+        return str
+
+    if str(annotation).find('typing.List[int]') != -1:
+        return int
+
+    if str(annotation).find('typing.List[float]') != -1:
+        return float
+
+    if str(annotation).find('typing.List[bool]') != -1:
+        return bool
+
+    return str
