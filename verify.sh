@@ -2,7 +2,7 @@
 clear
 
 set -e
-echo "strating verify with pylint and mypy... ";
+echo "starting verify with pylint and mypy... ";
 
 
 # --------------------------
