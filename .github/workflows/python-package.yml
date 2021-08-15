@@ -5,6 +5,8 @@ name: Python package
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -59,7 +61,14 @@ jobs:
       run:  coverage run -m unittest discover tests
     - name: Generate coverage report
       run: coverage xml
-   
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
+        files: ./coverage.xml
+        flags: unittests
+
 
   
   publish:
