@@ -9,7 +9,6 @@ Flask-RESTX-Squared
     
     
 .. |CI Tests| image:: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml/badge.svg
-    :target: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml
 
 
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
