@@ -1,3 +1,12 @@
+#This is the unit test of the create_model function
+#Author: Seif Ashraf
+
+# Testing Methodology
+# send return types example as a dict to the function to simulate the output of the annotations function
+# let create_model() process input and get its output
+# compare its output types with a sample model
+# NOTE: typing.List needs comparing its type of fields.List with the create_model output type cuz idk why
+
 from flask_restx_square import *
 from flask_restx_square.model_api import create_model
 from typing import Dict, List, Optional, OrderedDict, get_type_hints
@@ -6,11 +15,7 @@ from datetime import date
 import unittest
 from enum import Enum
 
-# Testing Methodology
-# send return types example as a dict to the function to simulate the output of the annotations function
-# let create_model() process input and get its output
-# compare its output types with a sample model
-# NOTE: typing.List needs comparing its type of fields.List with the create_model output type cuz idk why
+
 
 model = {
     'id': fields.Integer,
