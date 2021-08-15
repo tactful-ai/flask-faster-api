@@ -5,12 +5,9 @@ Flask-RESTX-Squared
 
 .. image:: https://codecov.io/gh/tactful-ai/flask-faster-api/branch/develop/graph/badge.svg?token=FZJANN69LH
     :target: https://codecov.io/gh/tactful-ai/flask-faster-api
-
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
-    :alt: License
-    
+    :alt: License  
 .. image:: https://img.shields.io/github/stars/tactful-ai/flask-faster-api?style=social   :alt: GitHub Repo stars
-
 .. image:: https://img.shields.io/pypi/pyversions/flaskresty   
     :target: https://pypi.org/project/flaskresty
     :alt: Supported Python versions
