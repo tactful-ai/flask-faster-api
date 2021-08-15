@@ -11,6 +11,8 @@ license = "MIT"
 python = "^3.7"
 flask-restx = "^0.5.0"
 coverage = "^5.5"
+pylint = "^2.9.6"
+
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
