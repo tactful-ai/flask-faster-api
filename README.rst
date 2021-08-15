@@ -3,7 +3,7 @@ Flask-RESTX-Squared
 ==============
 
 
-.. image:: https://codecov.io/gh/tactful-ai/flask-faster-api/branch/main/graph/badge.svg?token=FZJANN69LH
+.. image:: https://codecov.io/gh/tactful-ai/flask-faster-api/branch/develop/graph/badge.svg?token=FZJANN69LH
     :target: https://codecov.io/gh/tactful-ai/flask-faster-api
 
 
