@@ -24,7 +24,7 @@ Flask-RESTY requires Python 2.7 or 3.4+.
 
 
 
-![poly](https://user-images.githubusercontent.com/63073172/125258726-e9fa5600-e2fe-11eb-8d4c-b39cdf553e13.PNG)
+.. image:: https://user-images.githubusercontent.com/63073172/125258726-e9fa5600-e2fe-11eb-8d4c-b39cdf553e13.PNG
 
 
 
