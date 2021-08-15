@@ -1,5 +1,5 @@
 ==============
-Flask RESTY
+Flask-RESTX-Squared
 ==============
 
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
@@ -13,35 +13,31 @@ Flask RESTY
 
 
 
-Flask-RESTY is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
+Flask-RESTX-Squared is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
 
 
 
 Compatibility
 =============
 
-Flask-RESTY requires Python 2.7 or 3.4+. 
-
-
-
-.. image:: https://user-images.githubusercontent.com/63073172/125258726-e9fa5600-e2fe-11eb-8d4c-b39cdf553e13.PNG
+Flask-RESTX-Squared requires Python 2.7 or 3.4+. 
 
 
 
 Installation
 ============
 
-You can install Flask-RESTY with pip:
+You can install Flask-RESTX-Squared with pip:
 
 .. code-block:: console
 
-    $ pip install flaskresty
+    $ pip install flask-restx-square
     
 
 Quick start
 ===========
 
-With Flask-RESTY and the autowire decorator feature, parsing path parameters and creating api models is done using only one decorator! 
+With Flask-RESTX-Squared and the autowire decorator feature, parsing path parameters and creating api models is done using only one decorator! 
 
 .. code-block:: python
 
@@ -117,11 +113,24 @@ With Flask-RESTY and the autowire decorator feature, parsing path parameters and
 
 
 
+Before Using Flask-RESTX-Squared
+================================
+
+.. image:: https://user-images.githubusercontent.com/63073172/129478541-496f4bb5-014f-4e29-a3b9-b61572a99c65.png
+
+
+After Using Flask-RESTX-Squared
+================================
+
+.. image:: https://user-images.githubusercontent.com/63073172/129478647-41a13312-653b-4cc8-81ef-c5bb29c69614.png
+
+
+
 
 Contributors
 ============
 
-Flask-RESTY is brought to you by @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
+Flask-RESTX-Squared is brought to you by @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
 
 
 
