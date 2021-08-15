@@ -41,6 +41,7 @@ input = {
 }
 
 
+#class for the model model to match it to the model generated 
 class ModelMatcher:
     model: dict
 
@@ -61,7 +62,7 @@ class ModelMatcher:
 
 descriptions = dict()
 
-
+#the unit testing function
 class TestModel(unittest.TestCase):
     def test_one(self):
         self.assertEqual(ModelMatcher(
