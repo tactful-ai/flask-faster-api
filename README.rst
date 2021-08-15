@@ -7,8 +7,9 @@ Flask-RESTX-Squared
 .. image:: https://codecov.io/gh/tactful-ai/flask-faster-api/branch/main/graph/badge.svg?token=FZJANN69LH
     :target: https://codecov.io/gh/tactful-ai/flask-faster-api
     
-.. image:: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml/badge.svg  
-    :alt: Tests
+.. |CI Tests| image:: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml/badge.svg
+   :target: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml
+
 
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
     :alt: License
