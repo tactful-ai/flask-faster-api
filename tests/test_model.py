@@ -1,7 +1,7 @@
 from flask_restx_square import *
 from flask_restx_square.model_api import create_model
 from typing import Dict, List, Optional, OrderedDict, get_type_hints
-from flask_restx import fields
+from flask_restx import fields  # type: ignore
 from datetime import date
 import unittest
 from enum import Enum
