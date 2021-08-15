@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Any
-from flask_restx import fields
+from flask_restx import fields   # type: ignore
 
 
 python2restplus = {
@@ -16,7 +16,7 @@ python2restplus = {
 }
 
 
-def create_model(types, descriptions):
+def create_model(types, descriptions={}):
     modeltemp = dict()
 
     for type in types:
