@@ -1,6 +1,10 @@
 import unittest
 from inspect import Parameter
-from typing import List, Literal, Tuple
+from typing import List
+try:
+    from typing import  Literal
+except:
+    from typing_extensions import Literal
 from fastapi import Query, Body, Header 
 from flask_restx_square.parser_api import get_param_location, get_list_type, get_literal_tuple
 
