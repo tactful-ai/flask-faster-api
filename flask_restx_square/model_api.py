@@ -4,7 +4,7 @@ it takes return type as input and returns a model as an output
 '''
 from flask_restx import fields   # type: ignore
 
-#dict to map each return type to its field data type
+# dict to map each return type to its field data type
 python2restplus = {
     'str': fields.String,
     'datetime': fields.DateTime,
