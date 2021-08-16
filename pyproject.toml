@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flask-restx-square"
-version = "0.1.8"
+version = "0.1.9"
 description = "Flask-RESTX-Square is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask."
 authors = ["nadaabdelmaboud <nada5aled5@gmail.com>"]
 keywords = ["flask", "flask-restx","Mypy"]
