@@ -1,12 +1,13 @@
 import unittest
 from inspect import Parameter
-from typing import List
+from typing import List, Tuple
 try:
-    from typing import  Literal
-except:
+    from typing import Literal
+except ImportError:
     from typing_extensions import Literal
-from fastapi import Query, Body, Header 
-from flask_restx_square.parser_api import get_param_location, get_list_type, get_literal_tuple
+
+from fastapi import Query, Body, Header
+from flask_restx_square.parser_api import get_param_location, get_list_type, get_literal_tuple ,get_param_type
 
 parameters = {
     "id": Parameter('id', Parameter.KEYWORD_ONLY, default=Query(None), annotation=int),
@@ -16,29 +17,42 @@ parameters = {
     "option1": Parameter('option1', Parameter.KEYWORD_ONLY, default=Query(None), annotation=Literal[1, 5, 20]),
     "finish": Parameter('finish', Parameter.KEYWORD_ONLY, default=Query(None), annotation=bool),
     "duration": Parameter('duration', Parameter.KEYWORD_ONLY, default=Query(None), annotation=float),
+    "student_data": Parameter('student_data', Parameter.KEYWORD_ONLY, default=Body(None), annotation=dict),
     "option2": Parameter('option2', Parameter.KEYWORD_ONLY, default=Header(None),
                          annotation=Literal["course1", "course2", "course3"])
 }
 
 # test sub methods which used for create parser
+# get_param_type()
 # get_param_location()
 # get_literal_tuple()
 # get_list_type()
 
 
 class TestParser(unittest.TestCase):
+    def test_param_type(self):
+        param_type = get_param_type(parameters["id"])
+        self.assertEqual(param_type, int)
+
+        param_type = get_param_type(parameters["teachers"])
+        self.assertEqual(param_type, List[str])
+
+        param_type = get_param_type(parameters["option1"])
+        self.assertEqual(param_type, Literal[1, 5, 20])
+
+        param_type = get_param_type(parameters["student_data"])
+        self.assertEqual(param_type, dict)
+
     def test_param_location(self):
         location = get_param_location(parameters["id"])
         self.assertIsNotNone(location)
-        self.assertNotEqual(location, 'sss')
         self.assertNotEqual(location, 'form')
         self.assertEqual(location, 'args')
 
         location = get_param_location(parameters["students_id"])
         self.assertIsNotNone(location)
         self.assertNotEqual(location, 'headers')
-        self.assertNotEqual(location, "true")
-        self.assertEqual(location, 'form')
+        self.assertEqual(location, 'json')
 
         location = get_param_location(parameters["option2"])
         self.assertNotEqual(location, 'args')
@@ -49,11 +63,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(location, 'args')
 
     def test_literal_param(self):
-
         res = get_literal_tuple(parameters["option1"].annotation)
         self.assertIsNotNone(res)
         self.assertNotEqual(res, tuple(("1", "5", "50")))
-        self.assertNotEqual(res, tuple((-1, -5, -20)))
         self.assertEqual(res, tuple((1, 5, 20)))
 
         res = get_literal_tuple(parameters["option2"].annotation)
