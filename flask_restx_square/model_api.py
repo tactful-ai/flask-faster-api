@@ -1,7 +1,7 @@
-#This files contains the implementation of the model generator function which takes return type as input and returns a model as an output
-
-from enum import Enum
-from typing import Any
+'''
+This files contains the implementation of the model generator function
+it takes return type as input and returns a model as an output
+'''
 from flask_restx import fields   # type: ignore
 
 #dict to map each return type to its field data type
@@ -17,23 +17,26 @@ python2restplus = {
     'dict': fields.Raw,
 }
 
-#the model generator function which takes return type as input and returns a model as an output
-def create_model(types, descriptions={}):
-    modeltemp = dict()
 
-    for type in types:
-        ans = str(types[type])
+def create_model(types, descriptions):
+    '''
+    the model generator function which takes return type as input and returns a model as an output
+    '''
+    modeltemp = {}
+    descriptions = {}
+    for type_ in types:
+        ans = str(types[type_])
 
         if ans.find('typing') != -1:
             key = ans.split("[")[0]
-            fieldsParam = ans.split("[")[1].replace("]", "")
-            type = str(type)
-            if descriptions.get(type) is None:
-                descriptions[type] = ""
-            modeltemp[type] = python2restplus[key](
-                python2restplus[fieldsParam], description=descriptions[type])
+            fields_param = ans.split("[")[1].replace("]", "")
+            type_ = str(type_)
+            if descriptions.get(type_) is None:
+                descriptions[type_] = ""
+            modeltemp[type_] = python2restplus[key](
+                python2restplus[fields_param], description=descriptions[type_])
         else:
-            k = str(type)
+            k = str(type_)
             ans = ans.split(" ")[1]
             ans = ans.replace("'", "")
             ans = ans.replace(">", "")
