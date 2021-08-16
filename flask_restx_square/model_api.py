@@ -1,8 +1,10 @@
+#This files contains the implementation of the model generator function which takes return type as input and returns a model as an output
+
 from enum import Enum
 from typing import Any
 from flask_restx import fields   # type: ignore
 
-
+#dict to map each return type to its field data type
 python2restplus = {
     'str': fields.String,
     'datetime': fields.DateTime,
@@ -15,7 +17,7 @@ python2restplus = {
     'dict': fields.Raw,
 }
 
-
+#the model generator function which takes return type as input and returns a model as an output
 def create_model(types, descriptions={}):
     modeltemp = dict()
 
