@@ -1,13 +1,14 @@
 import unittest
 from inspect import Parameter
 from typing import List, Tuple
+from fastapi import Query, Body, Header, File
+from werkzeug.datastructures import FileStorage
+from flask_restx_square.parser_api import get_param_location, get_list_type, get_literal_tuple, get_param_type
 try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal
 
-from fastapi import Query, Body, Header
-from flask_restx_square.parser_api import get_param_location, get_list_type, get_literal_tuple ,get_param_type
 
 parameters = {
     "id": Parameter('id', Parameter.KEYWORD_ONLY, default=Query(None), annotation=int),
@@ -18,6 +19,7 @@ parameters = {
     "finish": Parameter('finish', Parameter.KEYWORD_ONLY, default=Query(None), annotation=bool),
     "duration": Parameter('duration', Parameter.KEYWORD_ONLY, default=Query(None), annotation=float),
     "student_data": Parameter('student_data', Parameter.KEYWORD_ONLY, default=Body(None), annotation=dict),
+    "file1": Parameter('file1', Parameter.KEYWORD_ONLY, default=File(None), annotation=FileStorage),
     "option2": Parameter('option2', Parameter.KEYWORD_ONLY, default=Header(None),
                          annotation=Literal["course1", "course2", "course3"])
 }
@@ -43,6 +45,9 @@ class TestParser(unittest.TestCase):
         param_type = get_param_type(parameters["student_data"])
         self.assertEqual(param_type, dict)
 
+        param_type = get_param_type(parameters["file1"])
+        self.assertEqual(param_type, FileStorage)
+
     def test_param_location(self):
         location = get_param_location(parameters["id"])
         self.assertIsNotNone(location)
@@ -61,6 +66,9 @@ class TestParser(unittest.TestCase):
         location = get_param_location(parameters["name"])
         self.assertNotEqual(location, 'headers')
         self.assertEqual(location, 'args')
+
+        location = get_param_location(parameters["file1"])
+        self.assertEqual(location, 'files')
 
     def test_literal_param(self):
         res = get_literal_tuple(parameters["option1"].annotation)
