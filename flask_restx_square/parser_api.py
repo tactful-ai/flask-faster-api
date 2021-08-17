@@ -9,6 +9,7 @@ LocationToRestX = {
     'Form': 'form',
     'Header': 'headers',
     'Cookie': 'cookies',
+    'File': 'files',
     'Path': 'Path',
 }
 
@@ -37,8 +38,7 @@ def get_parser(parameters) -> reqparse:
                 parser.add_argument(str(param.name), type=type(res[0]), required=True, choices=res,
                                     location=location)
         else:
-            parser.add_argument(str(param.name), type=param_type,
-                                location=location)
+            parser.add_argument(str(param.name), type=param_type, location=location)
 
     return parser
 
@@ -48,13 +48,13 @@ def get_param_type(param):
     return param.annotation
 
 
-def get_literal_tuple(annotation):
+def get_literal_tuple(param_type):
     """
     get literal option from annotation string and return result in tuple.
     """
-    s_index: int = str(annotation).index('[')
-    e_index: int = str(annotation).index(']')
-    str_list = str(annotation)[s_index + 1:e_index]
+    s_index: int = str(param_type).index('[')
+    e_index: int = str(param_type).index(']')
+    str_list = str(param_type)[s_index + 1:e_index]
 
     res = ast.literal_eval(str_list)
     if res:
@@ -74,20 +74,20 @@ def get_param_location(param) -> str:
     return LocationToRestX['Path']
 
 
-def get_list_type(annotation):
+def get_list_type(param_type):
     """
     return type of given list
     """
-    if str(annotation).find('typing.List[str]') != -1:
+    if str(param_type).find('[str]') != -1:
         return str
 
-    if str(annotation).find('typing.List[int]') != -1:
+    if str(param_type).find('[int]') != -1:
         return int
 
-    if str(annotation).find('typing.List[float]') != -1:
+    if str(param_type).find('[float]') != -1:
         return float
 
-    if str(annotation).find('typing.List[bool]') != -1:
+    if str(param_type).find('[bool]') != -1:
         return bool
 
     return str
