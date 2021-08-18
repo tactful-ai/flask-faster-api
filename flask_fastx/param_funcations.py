@@ -3,7 +3,7 @@ define parameters functions
 """
 from typing import Any, Dict, Optional
 
-from fastapi import params
+from flask_fastx import params
 from pydantic.fields import Undefined
 
 # pylint: disable=invalid-name
