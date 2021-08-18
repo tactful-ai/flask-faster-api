@@ -16,7 +16,6 @@ Flask-Fastx
     :alt: Supported Python versions
    
 
-
 Flask-RESTX-Squared is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
 
 
