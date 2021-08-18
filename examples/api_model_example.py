@@ -4,8 +4,8 @@ Testing the library with returing model example
 
 from flask import Flask, request
 from flask_restx import Api, Resource
-from flask_restx_square import autowire, register_api
-from data import courses
+from flask_fastx import autowire, register_api
+from .data import courses
 
 app = Flask(__name__)
 api = Api(app)

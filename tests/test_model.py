@@ -7,10 +7,10 @@
 # compare its output types with a sample model
 # NOTE: typing.List needs comparing its type of fields.List with the create_model output type cuz idk why
 
-from flask_restx_square import *
-from flask_restx_square.model_api import create_model
+from flask_fastx import *
+from flask_fastx.model_api import create_model
 import unittest
-from utils import *
+from .utils import *
 
 
 # the unit testing function

@@ -1,10 +1,10 @@
 from typing import List
 from flask import Flask, request
 from flask_restx import Api, Resource
-from flask_restx_square import autowire, register_api
-from flask_restx_square.model_api import create_model
-from flask_restx_square.parser_api import get_parser
-from data import courses
+from flask_fastx import autowire, register_api
+from flask_fastx.model_api import create_model
+from flask_fastx.parser_api import get_parser
+from .data import courses
 
 app = Flask(__name__)
 api = Api(app)

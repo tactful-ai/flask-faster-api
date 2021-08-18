@@ -1,17 +1,15 @@
 [tool.poetry]
-name = "flask-restx-square"
-version = "0.2.1"
-description = "Flask-RESTX-Square is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask."
-authors = ["nadaabdelmaboud <nada5aled5@gmail.com>"]
+name = "flask-fastx"
+version = "0.1.0"
+description = "Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask."
+authors = ["nadaabdelmaboud     seifashraf1     ahmedihabb2     omargamal253"]
 keywords = ["flask", "flask-restx","Mypy"]
-readme = "README.rst"
 license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
 flask-restx = "^0.5.0"
 fastapi = "^0.68.0"
-
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
