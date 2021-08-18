@@ -52,7 +52,7 @@ With Flask-RESTX-Squared and the autowire decorator feature, parsing path parame
 Before Using Flask-RESTX-Squared
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/129478541-496f4bb5-014f-4e29-a3b9-b61572a99c65.png
+.. image:: https://user-images.githubusercontent.com/63073172/129958313-70966bf8-e022-49ad-abf6-91d874d7bd02.png
 
 
 After Using Flask-RESTX-Squared
