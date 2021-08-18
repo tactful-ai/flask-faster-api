@@ -5,6 +5,7 @@ Flask-Fastx
 .. image:: https://codecov.io/gh/tactful-ai/flask-faster-api/branch/main/graph/badge.svg?token=FZJANN69LH
     :target: https://codecov.io/gh/tactful-ai/flask-faster-api
     :alt: Code Coverage
+    
 .. image:: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml/badge.svg
    :target: https://github.com/tactful-ai/flask-faster-api/actions/workflows/python-package.yml
    :alt: CI Tests
