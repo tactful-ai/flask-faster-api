@@ -1,7 +1,7 @@
 """ This module enable to add parameters to be parsed """
-
 import ast
 from flask_restx import reqparse  # type: ignore
+from flask_restx_square.params import Param
 
 LocationToRestX = {
     'Query': 'args',
@@ -10,7 +10,7 @@ LocationToRestX = {
     'Header': 'headers',
     'Cookie': 'cookies',
     'File': 'files',
-    'Path': 'Path',
+    'Path': 'path',
 }
 
 
@@ -20,25 +20,29 @@ def get_parser(parameters) -> reqparse:
     return the results as a parser.
     """
     parser = reqparse.RequestParser()
-
     for param in parameters.values():
         location: str = get_param_location(param)
         param_type = get_param_type(param)
-
-        if location == 'Path':
+        default = None
+        if location == 'path':
             continue
+        param_default: Param
+        param_default = param.default
+        if param_default.default:
+            default = param_default.default
         if str(param_type).find('typing.List') != -1:
             list_type = get_list_type(param_type)
             parser.add_argument(str(param.name), type=list_type, action='split',
-                                location=location)
+                                location=location, default=default)
 
         elif str(param_type).find('typing.Literal') != -1:
             res = get_literal_tuple(str(param_type))
             if res and len(res) > 0:
-                parser.add_argument(str(param.name), type=type(res[0]), required=True, choices=res,
-                                    location=location)
+                parser.add_argument(str(param.name), type=type(res[0]), choices=res,
+                                    location=location, default=default)
         else:
-            parser.add_argument(str(param.name), type=param_type, location=location)
+            parser.add_argument(str(param.name), type=param_type, location=location
+                                , default=default)
 
     return parser
 
