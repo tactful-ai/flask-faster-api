@@ -46,7 +46,7 @@ def get_params_description(doc):
     return params_description
 
 
-def autowire_decorator(func):
+def autowire(func):
     """The Autowire Decorator that wraps the function"""
     api = API.get_api()
     params_return = func.__annotations__
