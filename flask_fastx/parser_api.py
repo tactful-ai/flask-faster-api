@@ -1,7 +1,7 @@
 """ This module enable to add parameters to be parsed """
 import ast
 from flask_restx import reqparse  # type: ignore
-from flask_restx_square.params import Param
+from flask_fastx.params import Param
 
 LocationToRestX = {
     'Query': 'args',
@@ -41,8 +41,8 @@ def get_parser(parameters) -> reqparse:
                 parser.add_argument(str(param.name), type=type(res[0]), choices=res,
                                     location=location, default=default)
         else:
-            parser.add_argument(str(param.name), type=param_type, location=location
-                                , default=default)
+            parser.add_argument(str(param.name), type=param_type,
+                                location=location, default=default)
 
     return parser
 

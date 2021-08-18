@@ -6,8 +6,8 @@ echo "starting verify with pylint and mypy... ";
 
 
 # --------------------------
-mypy "./flask_restx_square" ;
-pylint "./flask_restx_square";
+mypy "./flask_fastx" ;
+pylint "./flask_fastx";
 
 
 

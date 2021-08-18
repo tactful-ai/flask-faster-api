@@ -3,7 +3,7 @@ replace @api.marshal_with decorator and
 @api.expect decorator through supporting MyPy types."""
 import inspect
 from functools import wraps
-from flask_fastx import Api      # type: ignore
+from flask_restx import Api      # type: ignore
 from flask_fastx.model_api import create_model
 from flask_fastx.parser_api import get_parser
 

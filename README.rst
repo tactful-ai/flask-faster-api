@@ -1,5 +1,5 @@
 ==============
-Flask-RESTX-Squared
+Flask-Fastx
 ==============
 
 
