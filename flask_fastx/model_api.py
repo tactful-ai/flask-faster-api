@@ -6,7 +6,7 @@ it takes return type as input and returns a model as an output
 
 from flask_restx import fields   # type: ignore
 
-#dict to map each return type to its field data type
+# dict to map each return type to its field data type
 python2restplus = {
     'str': fields.String,
     'datetime': fields.DateTime,
@@ -25,7 +25,6 @@ def create_model(types, descriptions):
     the model generator function which takes return type as input and returns a model as an output
     '''
     modeltemp = {}
-    descriptions = {}
     for type_ in types:
         ans = str(types[type_])
 
@@ -35,6 +34,8 @@ def create_model(types, descriptions):
             type_ = str(type_)
             if descriptions.get(type_) is None:
                 descriptions[type_] = ""
+            if python2restplus.get(fields_param) is None:
+                fields_param = 'dict'
             modeltemp[type_] = python2restplus[key](
                 python2restplus[fields_param], description=descriptions[type_])
         else:

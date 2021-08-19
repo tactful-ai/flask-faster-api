@@ -1,0 +1,20 @@
+courses = [
+    {'id': 0,
+     'title': 'CS106',
+     'duration': '30',
+     'teachers': ['Seif', 'Ahmed', 'Hammad'],
+     'studentsCount': 0,
+     },
+    {'id': 1,
+     'title': 'CS110',
+     'duration': '45',
+     'teachers': ['Mohamed', 'Ahmed', 'Hammad'],
+     'studentsCount': 0,
+     },
+    {'id': 2,
+     'title': 'CS321',
+     'duration': '60',
+     'teachers': ['Seif', 'Ashraf', 'Hammad'],
+     'studentsCount': 0,
+     }
+]
