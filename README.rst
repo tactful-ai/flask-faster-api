@@ -13,7 +13,7 @@ Flask-Fastx
     :alt: License
 .. image:: https://img.shields.io/github/stars/tactful-ai/flask-faster-api?style=social   :alt: GitHub Repo stars
 .. image:: https://img.shields.io/pypi/pyversions/flask-restx-square  
-    :target: https://pypi.org/project/flask-restx-square  
+    :target: https://pypi.org/project/flask-fastx
     :alt: Supported Python versions
    
 
