@@ -10,7 +10,7 @@
 from flask_fastx import *
 from flask_fastx.model_api import create_model
 import unittest
-from .utils import *
+from utils import *
 
 
 # the unit testing function
