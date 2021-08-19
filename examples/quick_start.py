@@ -1,9 +1,14 @@
-from typing import List
+from typing import List,Literal
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource
+from werkzeug.utils import secure_filename
+
 from flask_fastx import autowire, register_api
+from flask_fastx.param_funcations import File, Header
 from flask_fastx.params import Query, Path, Body
 from pydantic import BaseModel
+from werkzeug.datastructures import FileStorage
+
 
 app = Flask(__name__)
 api = Api(app, version="1.0", title="Courses API", description="A simple API")
@@ -27,6 +32,12 @@ class Course(BaseModel):
     studentsCount: int
 
 
+file_model = dict({
+    'course_file': str,
+    'key': str,
+})
+
+
 courses: List[Course] = []
 
 
@@ -46,6 +57,15 @@ class CourseListApi(Resource):
         courses.append(course)
         return course
 
+    @autowire
+    def put(self, course_file: FileStorage = File(None), key: str = Header(None)) -> file_model:
+        filename = secure_filename(course_file.filename)
+        file_ = {
+            'course_file': filename,
+            'key': key
+        }
+        return file_
+
 
 @courses_ns.route('/<int:id>')
 class CourseApi(Resource):
@@ -55,7 +75,7 @@ class CourseApi(Resource):
         return course
 
     @autowire
-    def put(self, id: int = Path(None), title: str = Query(None), teachers: List[str] = Query(None)) -> Course:
+    def put(self, id: int, title: Literal["Java", "C#", "Kotlin"] = Query(None), teachers: List[str] = Query(None)) -> Course:
         course = [course for course in courses if course.id == id][0]
         if title is not None:
             course.title = title
@@ -64,10 +84,13 @@ class CourseApi(Resource):
         return course
 
     @autowire
-    def delete(self, id: int = Path(None)) -> str:
+    def delete(self, id: int) -> str:
         course = [course for course in courses if course.id == id][0]
         courses.remove(course)
         return "course is removed succisfully", 200
+
+
+
 
 
 if __name__ == '__main__':
