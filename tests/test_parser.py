@@ -1,7 +1,7 @@
 import unittest
 from inspect import Parameter
 from typing import List, Tuple
-from fastapi import Query, Body, Header, File
+from flask_fastx.params import Query, Body, Header, File
 from werkzeug.datastructures import FileStorage
 from flask_fastx.parser_api import get_param_location, get_list_type, get_literal_tuple, get_param_type
 try:
