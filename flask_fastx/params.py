@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 
 from pydantic.fields import FieldInfo, Undefined  # type: ignore
 
-
+# pylint: disable=R0903
 
 class ParamTypes(Enum):
     """

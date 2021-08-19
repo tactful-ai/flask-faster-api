@@ -7,6 +7,7 @@ from flask_restx import Api      # type: ignore
 from flask_fastx.model_api import create_model
 from flask_fastx.parser_api import get_parser
 
+# pylint: disable=C0207
 
 class ApiDecorator():
     """The API Decorator"""

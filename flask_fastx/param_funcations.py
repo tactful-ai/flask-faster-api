@@ -2,9 +2,9 @@
 define parameters functions
 """
 from typing import Any, Dict, Optional
-
-from flask_fastx import params
 from pydantic.fields import Undefined  # type: ignore
+from flask_fastx import params
+
 
 # pylint: disable=invalid-name
 def Path(  # noqa: N802
