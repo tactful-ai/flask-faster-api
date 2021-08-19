@@ -12,7 +12,8 @@ Flask-Fastx
 .. image:: https://img.shields.io/github/license/tactful-ai/flask-faster-api   
     :alt: License
 .. image:: https://img.shields.io/github/stars/tactful-ai/flask-faster-api?style=social   :alt: GitHub Repo stars
-.. image:: https://img.shields.io/pypi/pyversions/flask-restx-square  
+
+.. image:: https://img.shields.io/pypi/pyversions/flask-fastx
     :target: https://pypi.org/project/flask-fastx
     :alt: Supported Python versions
    
@@ -46,13 +47,13 @@ With Flask-Fastx and the autowire decorator feature, parsing path parameters and
 Before Using Flask-Fastx
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/130029969-2f59777d-3ad1-423f-bbf1-a8c73d056300.png
+.. image:: https://user-images.githubusercontent.com/63073172/130047931-d0944c25-05a5-4e25-b920-568262498deb.png
 
 
 After Using Flask-Fastx
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/130017489-55b0d09d-5ba5-4455-8c88-29878b39e6c5.png
+.. image:: https://user-images.githubusercontent.com/63073172/130047935-1ca90e0d-b8ae-4ca8-9564-f11b894f0664.png
 
 
 
