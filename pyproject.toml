@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flask-fastx"
-version = "0.1.0"
+version = "0.1.1"
 description = "Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask."
 authors = ["nadaabdelmaboud     seifashraf1     ahmedihabb2     omargamal253"]
 readme = "README.rst"
