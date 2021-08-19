@@ -34,6 +34,8 @@ def create_model(types, descriptions):
             type_ = str(type_)
             if descriptions.get(type_) is None:
                 descriptions[type_] = ""
+            if python2restplus.get(fields_param) is None:
+                fields_param = 'dict'
             modeltemp[type_] = python2restplus[key](
                 python2restplus[fields_param], description=descriptions[type_])
         else:

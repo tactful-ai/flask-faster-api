@@ -48,24 +48,24 @@ def get_params_description(doc):
 def autowire(func):
     """The Autowire Decorator that wraps the function"""
     api = API.get_api()
-    params_return = func.__annotations__
     model_name = func.__qualname__.split('.')[0]
+    params_return = func.__annotations__
     params_return = params_return.get('return')
     isprimitive = False
     params_return_des = {}
     if params_return is None:
         api_model = api.model(model_name, {})
     else:
-        if (not isinstance(params_return, dict) and not inspect.isclass(params_return)):
+        if (check_class_dict(params_return)):
             params_return = {'data': params_return}
             isprimitive = True
-        if inspect.isclass(params_return):
+        if hasattr(params_return, '__annotations__'):
             params_return_des = get_params_description(
                 params_return.__doc__)
             params_return = params_return.__annotations__
         api_model = create_model(
             params_return, params_return_des)
-        api_model = api.model(model_name, api_model)
+        api_model = api.model(str(func.__name__)+model_name, api_model)
     signature = inspect.signature(func)
     parameters = dict(signature.parameters)
     parameters.pop('self')
@@ -81,3 +81,14 @@ def autowire(func):
             return {'data': func(*args, **args_parser, **kwargs)}
         return func(*args, **args_parser, **kwargs)
     return wrapper
+
+
+def check_class_dict(param_type):
+    """Check the class dict"""
+    dict_type = str(param_type).replace("<", "")
+    dict_type = dict_type.replace(">", "")
+    dict_type = dict_type.split(" ")[-1]
+
+    if not hasattr(param_type, '__annotations__') and dict_type is not "dict":
+        return True
+    return False
