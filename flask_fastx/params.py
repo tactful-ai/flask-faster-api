@@ -4,7 +4,7 @@ define parameters location classes
 from enum import Enum
 from typing import Any, Dict, Optional
 
-from pydantic.fields import FieldInfo, Undefined
+from pydantic.fields import FieldInfo, Undefined  # type: ignore
 
 
 
