@@ -43,7 +43,6 @@ def create_model(types, descriptions):
             ans = ans.split(" ")[1]
             ans = ans.replace("'", "")
             ans = ans.replace(">", "")
-            print("Primitive Type:  ", ans)
             if descriptions.get(k) is None:
                 descriptions[k] = ""
             modeltemp[k] = python2restplus[ans](description=descriptions[k])

@@ -56,7 +56,7 @@ def autowire(func):
     if params_return is None:
         api_model = api.model(model_name, {})
     else:
-        if (check_class_dict(params_return)):
+        if check_class_dict(params_return):
             params_return = {'data': params_return}
             isprimitive = True
         if hasattr(params_return, '__annotations__'):
@@ -85,11 +85,10 @@ def autowire(func):
 
 def check_class_dict(param_type):
     """Check the class dict"""
-    print("param type", param_type)
     dict_type = str(param_type).replace("<", "")
     dict_type = dict_type.replace(">", "")
     dict_type = dict_type.split(" ")[-1]
-
-    if not hasattr(param_type, '__annotations__') and dict_type is not "dict" and not isinstance(param_type, dict):
+    check_dect = dict_type != "dict" and not isinstance(param_type, dict)
+    if not hasattr(param_type, '__annotations__') and check_dect:
         return True
     return False
