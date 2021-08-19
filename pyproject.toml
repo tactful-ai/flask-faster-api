@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "flask-fastx"
-version = "0.1.1"
+version = "0.1.2"
 description = "Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask."
 authors = ["nadaabdelmaboud     seifashraf1     ahmedihabb2     omargamal253"]
 readme = "README.rst"
 homepage = "https://github.com/tactful-ai/flask-faster-api"
 repository = "https://github.com/tactful-ai/flask-faster-api"
+maintainers = ["ahmedbaz14@gmail.com"   , "seifashraf145@gmail.com"  , "nada5aled52@gmail.com" , "omargamal253@gmail.com"]
 keywords = ["flask", "flask-restx","Mypy"]
 license = "MIT"
 
