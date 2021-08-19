@@ -1,4 +1,4 @@
-from typing import List,Literal
+from typing import List, Literal
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource
 from werkzeug.utils import secure_filename
@@ -51,7 +51,7 @@ class CourseListApi(Resource):
         return dict_courses
 
     @autowire
-    def post(self, title: str = Body(None), duration: int = Body(None)) -> Course:
+    def post(self, title: str = Body("CMP"), duration: int = Body(3)) -> Course:
         course = Course(id=len(courses)+1, title=title,
                         duration=duration, teachers=[], studentsCount=0)
         courses.append(course)
@@ -70,12 +70,12 @@ class CourseListApi(Resource):
 @courses_ns.route('/<int:id>')
 class CourseApi(Resource):
     @autowire
-    def get(self, id: int = Path(None)) -> Course:
+    def get(self, id: int) -> Course:
         course = [course for course in courses if course.id == id][0]
         return course
 
     @autowire
-    def put(self, id: int, title: Literal["Java", "C#", "Kotlin"] = Query(None), teachers: List[str] = Query(None)) -> Course:
+    def put(self, id: int, title: Literal["Java", "C#", "Kotlin"] = Query("Java"), teachers: List[str] = Query([])) -> Course:
         course = [course for course in courses if course.id == id][0]
         if title is not None:
             course.title = title
@@ -88,9 +88,6 @@ class CourseApi(Resource):
         course = [course for course in courses if course.id == id][0]
         courses.remove(course)
         return "course is removed succisfully", 200
-
-
-
 
 
 if __name__ == '__main__':
