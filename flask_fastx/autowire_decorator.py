@@ -85,10 +85,11 @@ def autowire(func):
 
 def check_class_dict(param_type):
     """Check the class dict"""
+    print("param type", param_type)
     dict_type = str(param_type).replace("<", "")
     dict_type = dict_type.replace(">", "")
     dict_type = dict_type.split(" ")[-1]
 
-    if not hasattr(param_type, '__annotations__') and dict_type is not "dict":
+    if not hasattr(param_type, '__annotations__') and dict_type is not "dict" and not isinstance(param_type, dict):
         return True
     return False
