@@ -6,7 +6,6 @@ authors = ["nadaabdelmaboud     seifashraf1     ahmedihabb2     omargamal253"]
 readme = "README.rst"
 homepage = "https://github.com/tactful-ai/flask-faster-api"
 repository = "https://github.com/tactful-ai/flask-faster-api"
-maintainers = ["Ahmed Ihab <ahmedbaz14@gmail.com>   Seif Ashraf <seifashraf145@gmail.com> Nada AbdElmaboud <nada5aled52@gmail.com> Omar Gamal <omargamal253@gmail.com>"]
 keywords = ["flask", "flask-restx","Mypy"]
 license = "MIT"
 
