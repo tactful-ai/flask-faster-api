@@ -13,7 +13,7 @@ Flask-Fastx
     :alt: License
 .. image:: https://img.shields.io/github/stars/tactful-ai/flask-faster-api?style=social   :alt: GitHub Repo stars
 .. image:: https://img.shields.io/pypi/pyversions/flask-restx-square  
-    :target: https://pypi.org/project/flask-restx-square  
+    :target: https://pypi.org/project/flask-fastx
     :alt: Supported Python versions
    
 
@@ -24,7 +24,7 @@ Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with 
 Compatibility
 =============
 
-Flask-Fastx requires Python 3.4+. 
+Flask-Fastx requires Python 3.7+. 
 
 
 
@@ -46,7 +46,7 @@ With Flask-Fastx and the autowire decorator feature, parsing path parameters and
 Before Using Flask-Fastx
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/130017520-50858585-4d66-4829-8545-6385b078fd85.png
+.. image:: https://user-images.githubusercontent.com/63073172/130029969-2f59777d-3ad1-423f-bbf1-a8c73d056300.png
 
 
 After Using Flask-Fastx
