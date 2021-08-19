@@ -1,12 +1,15 @@
 """
 define parameters location classes
 """
+
+# pylint: disable=E0611
+# pylint: disable=R0903
+
 from enum import Enum
 from typing import Any, Dict, Optional
 
 from pydantic.fields import FieldInfo, Undefined  # type: ignore
 
-# pylint: disable=R0903
 
 class ParamTypes(Enum):
     """
