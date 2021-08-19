@@ -17,42 +17,42 @@ Flask-Fastx
     :alt: Supported Python versions
    
 
-Flask-RESTX-Squared is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
+Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with the flexibility of flask.
 
 
 
 Compatibility
 =============
 
-Flask-RESTX-Squared requires Python 2.7 or 3.4+. 
+Flask-Fastx requires Python 3.4+. 
 
 
 
 Installation
 ============
 
-You can install Flask-RESTX-Squared with pip:
+You can install Flask-Fastx with pip:
 
 .. code-block:: console
 
-    $ pip install flask-restx-square
+    $ pip install flask-fastx
     
 
 Quick start
 ===========
 
-With Flask-RESTX-Squared and the autowire decorator feature, parsing path parameters and creating api models is done using only one decorator! 
+With Flask-Fastx and the autowire decorator feature, parsing path parameters and creating api models is done using only one decorator! 
 
-Before Using Flask-RESTX-Squared
+Before Using Flask-Fastx
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/129958313-70966bf8-e022-49ad-abf6-91d874d7bd02.png
+.. image:: https://user-images.githubusercontent.com/63073172/130017520-50858585-4d66-4829-8545-6385b078fd85.png
 
 
-After Using Flask-RESTX-Squared
+After Using Flask-Fastx
 ================================
 
-.. image:: https://user-images.githubusercontent.com/63073172/129914217-d8c5cdcd-5167-4a19-9c05-7489759061ab.png
+.. image:: https://user-images.githubusercontent.com/63073172/130017489-55b0d09d-5ba5-4455-8c88-29878b39e6c5.png
 
 
 
@@ -60,7 +60,7 @@ After Using Flask-RESTX-Squared
 Contributors
 ============
 
-Flask-RESTX-Squared is brought to you by @mfouad, @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
+Flask-Fastx is brought to you by @mfouad, @seifashraf1, @ahmedihabb2, @nadaabdelmaboud, @omargamal253
 
 
 
