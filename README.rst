@@ -24,7 +24,7 @@ Flask-Fastx is a Fast API style support for Flask. It Gives you MyPy types with 
 Compatibility
 =============
 
-Flask-Fastx requires Python 3.4+. 
+Flask-Fastx requires Python 3.7+. 
 
 
 
