@@ -3,9 +3,11 @@ from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource
 from werkzeug.utils import secure_filename
 
-from flask_fastx import autowire, register_api
 from flask_fastx.param_funcations import File, Header
 from flask_fastx.params import Query, Path, Body
+
+from flask_fastx import autowire, register_api
+
 from pydantic import BaseModel
 from werkzeug.datastructures import FileStorage
 
@@ -15,6 +17,16 @@ api = Api(app, version="1.0", title="Courses API", description="A simple API")
 courses_ns = api.namespace("courses", description="Courses operations")
 
 register_api(api)
+
+
+class Name(BaseModel):
+    first_name: str
+    last_name: str
+
+
+class Title(BaseModel):
+    name: Name
+    description: str
 
 
 class Course(BaseModel):
@@ -28,7 +40,7 @@ class Course(BaseModel):
     id: int
     title: str
     duration: str
-    teachers: List[str]
+    teachers: List[Name]
     studentsCount: int
 
 
