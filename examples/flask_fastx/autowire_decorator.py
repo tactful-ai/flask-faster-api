@@ -57,7 +57,7 @@ def autowire(func):
     if params_return is None:
         api_model = api.model(model_name, {})
     else:
-        api_model, isprimitive = prepare_model_input(params_return)
+        api_model, isprimitive = prepare_model_input(api, params_return)
         api_model = api.model(str(func.__name__)+model_name, api_model)
     signature = inspect.signature(func)
     parameters = dict(signature.parameters)
@@ -76,7 +76,7 @@ def autowire(func):
     return wrapper
 
 
-def prepare_model_input(params):
+def prepare_model_input(api, params):
     """Prepare the model input"""
     isprimitive = False
     params_des = {}
@@ -88,7 +88,7 @@ def prepare_model_input(params):
             params_des = get_params_description(params.__doc__)
             params = prepare_param(params)
     print(params)
-    api_model = create_model(
+    api_model = create_model(api,
         params, params_des)
     return api_model, isprimitive
 
