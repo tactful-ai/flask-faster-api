@@ -1,4 +1,5 @@
 """ This module enable to add parameters to be parsed """
+
 import ast
 from flask_restx import reqparse  # type: ignore
 from flask_fastx.params import Param

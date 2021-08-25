@@ -102,4 +102,5 @@ jobs:
         PYPI_USER: ${{ secrets.PYPI_USERNAME }}
         PYPI_PASS: ${{ secrets.PYPI_PASSWORD }}
       run: |
-         poetry publish --build -u $PYPI_USER  -p $PYPI_PASS
+         poetry build
+         poetry publish -u $PYPI_USER  -p $PYPI_PASS
