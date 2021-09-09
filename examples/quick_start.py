@@ -38,9 +38,9 @@ class Course(BaseModel):
     studentsCount : the number of students enrolled in the course
     '''
     id: int
-    title: str
+    title: Title
     duration: str
-    teachers: List[Name]
+    teachers: List[Title]
     studentsCount: int
 
 
@@ -84,15 +84,6 @@ class CourseApi(Resource):
     @autowire
     def get(self, id: int) -> Course:
         course = [course for course in courses if course.id == id][0]
-        return course
-
-    @autowire
-    def put(self, id: int, title: Literal["Java", "C#", "Kotlin"] = Query("Java"), teachers: List[str] = Query([])) -> Course:
-        course = [course for course in courses if course.id == id][0]
-        if title is not None:
-            course.title = title
-        if teachers is not None:
-            course.teachers = teachers
         return course
 
     @autowire

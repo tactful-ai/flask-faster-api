@@ -2,7 +2,7 @@
 This module is for extracting path params from a given route
 '''
 
-from typing import List
+from typing import List, Optional, get_args
 import re
 
 
@@ -21,3 +21,12 @@ def extract_path_params(path):
         param = param[param.find(':')+1:]
         params_list.append(param)
     return params_list
+
+
+class name:
+    names: List[str]
+
+
+annot = name.__annotations__['names']
+
+print(annot.__args__[0])

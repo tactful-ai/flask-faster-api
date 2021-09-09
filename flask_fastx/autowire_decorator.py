@@ -5,9 +5,11 @@ import inspect
 from functools import wraps
 from flask_restx import Api      # type: ignore
 from flask_fastx.model_api import create_model
-from flask_fastx.parser_api import get_parser
+from flask_fastx.parser_api import get_parser, get_payload_model
+from flask_fastx.model_param import prepare_param
 
 # pylint: disable=C0207
+
 
 class ApiDecorator():
     """The API Decorator"""
@@ -53,28 +55,19 @@ def autowire(func):
     params_return = func.__annotations__
     params_return = params_return.get('return')
     isprimitive = False
-    params_return_des = {}
     if params_return is None:
         api_model = api.model(model_name, {})
     else:
-        if check_class_dict(params_return):
-            params_return = {'data': params_return}
-            isprimitive = True
-        if hasattr(params_return, '__annotations__'):
-            params_return_des = get_params_description(
-                params_return.__doc__)
-            params_return = params_return.__annotations__
-        api_model = create_model(
-            params_return, params_return_des)
+        api_model, isprimitive = prepare_model_input(api, params_return)
         api_model = api.model(str(func.__name__)+model_name, api_model)
     signature = inspect.signature(func)
     parameters = dict(signature.parameters)
     parameters.pop('self')
 
-    parser = get_parser(parameters)
+    parser = get_parser(parameters, api)
 
     @wraps(func)
-    @api.expect(parser)
+    @api.expect(parser, get_payload_model())
     @api.marshal_with(api_model)
     def wrapper(*args, **kwargs):
         args_parser = parser.parse_args()
@@ -82,6 +75,24 @@ def autowire(func):
             return {'data': func(*args, **args_parser, **kwargs)}
         return func(*args, **args_parser, **kwargs)
     return wrapper
+
+
+def prepare_model_input(api, params):
+    """Prepare the model input"""
+    print("params", params)
+    isprimitive = False
+    params_des = {}
+    if check_class_dict(params):
+        params = {'data': params}
+        isprimitive = True
+    else:
+        if hasattr(params, '__annotations__'):
+            params_des = get_params_description(params.__doc__)
+            params = prepare_param(params)
+    model_params = params.copy()
+    api_model = create_model(api,
+                             model_params, params_des)
+    return api_model, isprimitive
 
 
 def check_class_dict(param_type):
