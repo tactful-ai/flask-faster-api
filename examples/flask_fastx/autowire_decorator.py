@@ -5,7 +5,7 @@ import inspect
 from functools import wraps
 from flask_restx import Api      # type: ignore
 from flask_fastx.model_api import create_model
-from flask_fastx.parser_api import get_parser
+from examples.flask_fastx.parser_api import get_parser, get_payload_model
 
 # pylint: disable=C0207
 
@@ -63,10 +63,10 @@ def autowire(func):
     parameters = dict(signature.parameters)
     parameters.pop('self')
 
-    parser = get_parser(parameters)
+    parser = get_parser(parameters, api)
 
     @wraps(func)
-    @api.expect(parser)
+    @api.expect(parser, get_payload_model())
     @api.marshal_with(api_model)
     def wrapper(*args, **kwargs):
         args_parser = parser.parse_args()
