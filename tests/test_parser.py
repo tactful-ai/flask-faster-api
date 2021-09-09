@@ -1,99 +1,62 @@
 import unittest
+
+from flask import Flask
+from flask_restx import Api
 from inspect import Parameter
-from typing import List, Tuple
-from flask_fastx.params import Query, Body, Header, File
+from typing import List
+
+from examples.flask_fastx.model_api import create_model
+from examples.flask_fastx.params import Query, Body, File
 from werkzeug.datastructures import FileStorage
-from flask_fastx.parser_api import get_param_location, get_list_type, get_literal_tuple, get_param_type
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal
+from examples.flask_fastx.parser_api import get_parser_type
+
+
+class CourseModel:
+    name: str
+    course_id: int
+    students: List[str]
 
 
 parameters = {
-    "id": Parameter('id', Parameter.KEYWORD_ONLY, default=Query(None), annotation=int),
-    "name": Parameter('name', Parameter.KEYWORD_ONLY, default=Query(None), annotation=str),
-    "teachers": Parameter('teachers', Parameter.KEYWORD_ONLY, default=Query(None), annotation=List[str]),
-    "students_id": Parameter('students_id', Parameter.KEYWORD_ONLY, default=Body(None), annotation=List[int]),
-    "option1": Parameter('option1', Parameter.KEYWORD_ONLY, default=Query(None), annotation=Literal[1, 5, 20]),
-    "finish": Parameter('finish', Parameter.KEYWORD_ONLY, default=Query(None), annotation=bool),
-    "duration": Parameter('duration', Parameter.KEYWORD_ONLY, default=Query(None), annotation=float),
-    "student_data": Parameter('student_data', Parameter.KEYWORD_ONLY, default=Body(None), annotation=dict),
-    "file1": Parameter('file1', Parameter.KEYWORD_ONLY, default=File(None), annotation=FileStorage),
-    "option2": Parameter('option2', Parameter.KEYWORD_ONLY, default=Header(None),
-                         annotation=Literal["course1", "course2", "course3"])
+    "id": Parameter('id', Parameter.KEYWORD_ONLY, default=Query(), annotation=int),
+    "name": Parameter('name', Parameter.KEYWORD_ONLY, default=Query(), annotation=str),
+    "teachers": Parameter('teachers', Parameter.KEYWORD_ONLY, default=Body(), annotation=List[str]),
+    "course": Parameter('course', Parameter.KEYWORD_ONLY, default=Body(), annotation=CourseModel),
+    "courses": Parameter('courses', Parameter.KEYWORD_ONLY, default=Body(), annotation=List[CourseModel]),
+    "finish": Parameter('finish', Parameter.KEYWORD_ONLY, default=Query(), annotation=bool),
+    "duration": Parameter('duration', Parameter.KEYWORD_ONLY, default=Query(), annotation=float),
+    "student_data": Parameter('student_data', Parameter.KEYWORD_ONLY, default=Body(), annotation=dict),
+    "file1": Parameter('file1', Parameter.KEYWORD_ONLY, default=File(), annotation=FileStorage),
+
 }
 
 # test sub methods which used for create parser
-# get_param_type()
-# get_param_location()
-# get_literal_tuple()
-# get_list_type()
+# get_parser_type()
+
+
+app = Flask(__name__)
+api = Api(app)
+
+api_model = create_model(api, parameters["course"].annotation.__annotations__, {})
+api_model = api.model("CourseModel", api_model)
 
 
 class TestParser(unittest.TestCase):
     def test_param_type(self):
-        param_type = get_param_type(parameters["id"])
+        param_type = get_parser_type(parameters["id"].annotation, api)
         self.assertEqual(param_type, int)
 
-        param_type = get_param_type(parameters["teachers"])
+        param_type = get_parser_type(parameters["teachers"].annotation, api)
         self.assertEqual(param_type, List[str])
 
-        param_type = get_param_type(parameters["option1"])
-        self.assertEqual(param_type, Literal[1, 5, 20])
+        param_type = get_parser_type(parameters["course"].annotation, api)
+        self.assertEqual(type(param_type), type(api_model))
 
-        param_type = get_param_type(parameters["student_data"])
+        param_type = get_parser_type(parameters["student_data"].annotation, api)
         self.assertEqual(param_type, dict)
 
-        param_type = get_param_type(parameters["file1"])
+        param_type = get_parser_type(parameters["file1"].annotation, api)
         self.assertEqual(param_type, FileStorage)
-
-    def test_param_location(self):
-        location = get_param_location(parameters["id"])
-        self.assertIsNotNone(location)
-        self.assertNotEqual(location, 'form')
-        self.assertEqual(location, 'args')
-
-        location = get_param_location(parameters["students_id"])
-        self.assertIsNotNone(location)
-        self.assertNotEqual(location, 'headers')
-        self.assertEqual(location, 'json')
-
-        location = get_param_location(parameters["option2"])
-        self.assertNotEqual(location, 'args')
-        self.assertEqual(location, 'headers')
-
-        location = get_param_location(parameters["name"])
-        self.assertNotEqual(location, 'headers')
-        self.assertEqual(location, 'args')
-
-        location = get_param_location(parameters["file1"])
-        self.assertEqual(location, 'files')
-
-    def test_literal_param(self):
-        res = get_literal_tuple(parameters["option1"].annotation)
-        self.assertIsNotNone(res)
-        self.assertNotEqual(res, tuple(("1", "5", "50")))
-        self.assertEqual(res, tuple((1, 5, 20)))
-
-        res = get_literal_tuple(parameters["option2"].annotation)
-        self.assertIsNotNone(res)
-        self.assertNotEqual(res, tuple(("xx", "yy", "zz")))
-        self.assertNotEqual(res, tuple((55, -8888)))
-        self.assertEqual(res, tuple(("course1", "course2", "course3")))
-
-    def test_list_typeof(self):
-        type_ = get_list_type(parameters["teachers"].annotation)
-        self.assertNotEqual(type_, int)
-        self.assertNotEqual(type_, complex)
-        self.assertIsNotNone(type_)
-        self.assertEqual(type_, str)
-
-        type_ = get_list_type(parameters["students_id"].annotation)
-        self.assertNotEqual(type_, str)
-        self.assertNotEqual(type_, float)
-        self.assertIsNotNone(type_)
-        self.assertEqual(type_, int)
 
 
 if __name__ == '__main__':
